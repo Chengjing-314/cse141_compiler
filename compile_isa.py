@@ -133,7 +133,7 @@ def sweep_labels(source_file):
     return label_dict, line_number_dict
         
 def get_line_number(label, label_dict):
-    return label_dict[label.lower()]
+    return label_dict[label.lower()] + 1
 
 def main(args):
     source_file = args.f
@@ -147,7 +147,7 @@ def main(args):
     
     # check if destination file have content
     if df.readlines():
-        print('APORT: Destination file is not empty')
+        print('ABORT: Destination file is not empty')
         return
     
     label_dict, line_number_dict = sweep_labels(sf)
