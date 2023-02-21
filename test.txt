@@ -3,6 +3,7 @@ AND r1 r2                             # take out p0
 MOV r3 r0                            # p0 stored in r3
 SET r4 0b0                          # counter stored in r4
 SET r5 0b0                          # res stored in r5
+label:
 Mov r6 r1                            # temp stored in r6
 Lsr r6 1                              # temp = data >> 1
-Set r0 0b1
+bne r2 label

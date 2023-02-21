@@ -43,35 +43,33 @@ def get_resiger(reg, num_bits):
     else :
         reg_num = int(reg[1:])
         if reg_num > 2**num_bits - 1:
+            print(f"ERROR:Invalid register number {reg_num} (max {2**num_bits - 1})\n")
             return None
         else:
             return bin(reg_num)[2:].zfill(num_bits)
         
 def get_immediate(imm, num_bits):
     if isinstance(imm, str) and imm[:2] == '0b':
-        imm = int(imm)
+        imm = int(imm, 2)
     if imm > 2**num_bits - 1:
+        print(f"ERROR:Invalid immediate number {imm} (max {2**num_bits - 1})\n")
         return None
     return bin(imm)[2:].zfill(num_bits)
 
-def main(args):
-    source_file = args.f
-    desination_file = args.o
-    if not os.path.exists(source_file):
-        print('Error: Source file does not exist')
-        return
-    
-
-    sf = open(source_file, 'r')
-    lines = sf.readlines()
-    
-    df = open(desination_file, 'w')
-    
+def assemble_program(source_file, desination_file, label_dict, line_number_dict):
+    lines = source_file.readlines()
+    total_lines = len(lines)
     line_number = 1
+    res = ''
     try:
         for line in lines:
+            
+            if line_number_dict.get(line_number, None):
+                line_number += 1
+                continue
+            
             cur_line = line.split(' ')
-            res = ''
+    
             op, optype = get_operator(cur_line[0].lower())
             op1, op2 = None, None
             if optype == 'R':
@@ -83,28 +81,28 @@ def main(args):
             elif optype == 'J':
                 if cur_line[0].lower() == 'bne':
                     op1 = '0'
-                    op2 = get_immediate(int(cur_line[1]), 5)
-                else: # FIXME: SET NEED TO BE FIXED
-                    op1 = '000'
-                    op2 = '000'
+                    label_line = get_line_number(cur_line[2], label_dict)
+                    op2 = get_immediate(label_line, 5)
+                else: 
+                    op1 = '1'
+                    op2 = get_immediate(cur_line[2], 5)
             else:
                 op1 = '000',
                 op2 = '000'
             if not(op1 and op2):
-                raise ji_ni_tai_mei_exception(f"line{line_number} : Invalid instruction with type {optype} on operands {cur_line[1]} and {cur_line[2]}")
+                raise ji_ni_tai_mei_exception(f"line{line_number} : Invalid instruction with type {optype} on operands {cur_line[1]} or {cur_line[2]}")
             
-            res = op + op1 + op2
-            if line == lines[-1]:
-                df.write(res)
+            b_lin = op + op1 + op2
+            
+            if line_number != total_lines :
+                res += b_lin + '\n'
             else:
-                df.write(res + '\n')
+                res += b_lin
             
             line_number += 1
-        
-        df.close()
-        sf.close()
-        
-                
+            
+        desination_file.write(res)
+    
     except ji_ni_tai_mei_exception as e:
         print(str(e))
         os.remove(desination_file)
@@ -114,17 +112,56 @@ def main(args):
         os.remove(desination_file)
         raise(e)
     
+def sweep_labels(source_file):
+    op_keys = ['add', 'mov', 'xor', 'lw', 'sw', 'lsl', \
+               'lsr', 'bne', 'set', 'and', 'halt']
+    lines = source_file.readlines()
+    label_dict = {}
+    line_number_dict = {}
+    line_number = 1
+    for line in lines:
+        cur_line = line.split(' ')
+        cur_op = cur_line[0].lower()
+        if cur_op not in op_keys and cur_op[-2] == ':':
+            label_dict[cur_op[:-2]] = line_number
+            line_number_dict[line_number] = cur_op
+        elif cur_op not in op_keys:
+            print(cur_op[-1])
+            raise ji_ni_tai_mei_exception(f"line {line_number} : Invalid OP: {cur_op}")
+        line_number += 1
+    
+    return label_dict, line_number_dict
+        
+def get_line_number(label, label_dict):
+    return label_dict[label.lower()]
 
-
-
-
-
+def main(args):
+    source_file = args.f
+    desination_file = args.o
+    if not os.path.exists(source_file):
+        print('Error: Source file does not exist')
+        return
+    
+    sf = open(source_file, 'r')
+    df = open(desination_file, 'r+')
+    
+    # check if destination file have content
+    if df.readlines():
+        print('APORT: Destination file is not empty')
+        return
+    
+    label_dict, line_number_dict = sweep_labels(sf)
+    sf.seek(0) # reset file pointer
+    assemble_program(sf, df, label_dict, line_number_dict)
+    
+    df.close()
+    sf.close()
+        
+                
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog = 'ISA_compile',description='A simple compiler for 141 ISA')
-    parser.add_argument('-f', help='input file, absolute path')
+    parser.add_argument('-f', help='input file, absolute path', required=True)
     parser.add_argument('-o', help='output file name', default='./compiled_isa.txt')
     args = parser.parse_args()
     
     main(args)
-    
-
