@@ -77,7 +77,10 @@ def assemble_program(source_file, desination_file, label_dict, line_number_dict)
                 op2 = get_resiger(cur_line[2], 3)
             elif optype == 'I':
                 op1 = get_resiger(cur_line[1], 3)
-                op2 = get_immediate(int(cur_line[2]), 3)
+                if cur_line[0].lower() == 'lsl':
+                    op2 = '0'+ get_immediate(int(cur_line[2]), 2)
+                else:
+                    op2 = '1' + get_immediate(int(cur_line[2]), 2)
             elif optype == 'J':
                 if cur_line[0].lower() == 'bne':
                     op1 = '0'
