@@ -63,6 +63,7 @@ def assemble_program(source_file, desination_file, label_dict, line_number_dict)
     res = ''
     try:
         for line in lines:
+            print(line_number)
             
             if line_number_dict.get(line_number, None):
                 line_number += 1
@@ -84,11 +85,12 @@ def assemble_program(source_file, desination_file, label_dict, line_number_dict)
             elif optype == 'J':
                 if cur_line[0].lower() == 'bne':
                     op1 = '0'
-                    label_line = get_line_number(cur_line[2], label_dict)
+                    label_line = get_line_number(cur_line[1], label_dict)
                     op2 = get_immediate(label_line, 5)
                 else: 
                     op1 = '1'
-                    op2 = get_immediate(cur_line[2], 5)
+                    print(cur_line)
+                    op2 = get_immediate(cur_line[1], 5)
             else:
                 op1 = '000',
                 op2 = '000'
@@ -136,7 +138,7 @@ def sweep_labels(source_file):
     return label_dict, line_number_dict
         
 def get_line_number(label, label_dict):
-    return label_dict[label.lower()] + 1
+    return label_dict[label.lower().strip(' \n:')] + 1
 
 def main(args):
     source_file = args.f
@@ -146,7 +148,7 @@ def main(args):
         return
     
     sf = open(source_file, 'r')
-    df = open(desination_file, 'r+')
+    df = open(desination_file, 'w+')
     
     # check if destination file have content
     if df.readlines():

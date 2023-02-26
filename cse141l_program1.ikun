@@ -1,0 +1,85 @@
+set 0b11111 		# set r0 to be 11111
+lsl r0 2 		    # shift r0 left 4 bits
+lsl r0 2 		    
+mov r1 r0 			# move r0 to r1
+set 0b11000 		# set r0 to be 11000
+lsl r0 1 		    # shift r0 left 1 bit create 7 bit mask
+add r0 r1 			# r0 holds mask to extrac 11-5 bits
+and r0 r7           # extract (temp_11_5)
+mov r6 r0           # r6 holds temp_11_5
+set 0b1110          # set r0 to be 1110
+lsl r0 3            # shift r0 left 3 create 3 bit mask
+and r0 r7           # extract (temp_4_1)
+mov r5 r0           # r5 holds temp_4_1
+set 0b1             # set r0 to be 1
+lsl r0 2            # shift r0 left 2 bits create 1 bit mask 
+and r0 r7           # extract (temp_1)
+mov r0 r4           # r4 holds temp_1
+add r4 r5           # r0 holds temp_1 + temp_4_1
+add r0 r6           # r0 holds temp_1 + temp_4_1 + temp_11_5
+mov r7 r0           # r7 holds formated data (formated_data)
+set 0b0             # set r0 to be 0
+mov r0 r6           # r6 holds 0 as counter 
+set 0b0             # set r0 to be 0
+mov r0 r5           # r5 holds 0 as result
+set 0b10000         # set r0 to be 10000(16)
+mov r4 r7           # r4 holds formated_data as copy 
+set 0b1             # set r0 to be 1
+bne condition
+start:
+set 0b1             # set r0 to be 1
+and r0 r4           # extract bottom bit
+mov r3 r0           # r3 holds bottom bit
+set 0b1             # set r0 to be 1
+xor r0 r3           # flip our result 
+bne else
+xor r5 r6           # xor result 
+mov r0 r5           # move the result back
+else:
+set 0b1 
+add r0 r6           # increment counter
+mov r6 r0           # move counter back
+lsr r4 1            # shift right 1 bit 
+condition:
+set 0b10000         # set r0 to be 10000(16)
+xor r0 r6           # check if counter is 16
+bne start           # if not 16 go back to start
+mov r5 r6           # r6 holds result
+set 0b11 
+and r0 r6           # extract bottom 2 bits
+mov r5 r0           # r5 holds bottom 2 bits (mask_21)
+set 0b100 
+and r0 r6           # extract 3rd bit
+mov r4 r0           # r4 holds 3rd bit (mask_4)
+set 0b1000
+and r0 r6           # extract 4th bit
+mov r3 r0           # r3 holds 4th bit (mask 8)
+lsl r5 1            # shift left 1 bit
+lsl r4 2            # shift left 2 bits
+lsl r3 4            # shift left 4 bits
+add r5 r4           # r0 holds mask_21 + mask_4
+add r0 r3           # r0 holds mask_21 + mask_4 + mask_8
+add r0 r7           # r0 holds formated_data + mask_21 + mask_4 + mask_8
+mov r7 r0           # r7 holds formated_data + mask_21 + mask_4 + mask_8
+mov r6 r7           # copy r7 
+set 0b0             
+mov r5 r0           # r5 holds 0 as counter
+set 0b0 
+mov r4 r0           # r4 holds 0 as result
+set 0b1 
+bne condition2
+start2:
+set 0b1             # set r0 to be 1
+and r0 r6           # extract bottom bit
+xor r0 r4           
+mov r4 r0           
+set 0b1
+add r0 r5           # increment counter
+mov r5 r0           # move counter back
+lsr r6 1            # shift right 1 bit
+condition2:
+set 0b10000         # set r0 to be 10000(16)
+xor r0 r5           # check if counter is 16
+bne start2          # if not 16 go back to start
+mov r4 r5           # r5 holds result
+add r4 r7           # r0 holds formated_data + mask_21 + mask_4 + mask_8 + result
