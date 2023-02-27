@@ -56,7 +56,8 @@ and r0 r6           # extract 4th bit
 mov r3 r0           # r3 holds 4th bit (mask 8)
 lsl r5 1            # shift left 1 bit
 lsl r4 2            # shift left 2 bits
-lsl r3 4            # shift left 4 bits
+lsl r3 2            # shift left 4 bits
+lsl r3 2            
 add r5 r4           # r0 holds mask_21 + mask_4
 add r0 r3           # r0 holds mask_21 + mask_4 + mask_8
 add r0 r7           # r0 holds formated_data + mask_21 + mask_4 + mask_8
