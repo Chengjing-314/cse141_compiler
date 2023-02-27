@@ -19,7 +19,7 @@ always_comb begin
   if (alu_cmd_YiPie == 3'b110) begin
     case(alu_cmd)
       4'b1100: //bne
-        zero = !(|inA);
+        zero = (|inA);
       4'b1101: //set
         rslt = inB;
     endcase

@@ -1,0 +1,55 @@
+# r7 = mem[0]
+# lw r1 data
+set 0b1                           	# r2 = 1
+mov r0 r2
+and r1 r2                             # take out p0
+mov r3 r0                            # p0 stored in r3
+set r4 0b0                          # counter stored in r4
+set r5 0b0                          # res stored in r5
+mov r6 r1                            # temp stored in r6
+lsr r6 1                              # temp = data >> 1
+set r0 0b1
+bne condition			# jump to condition
+start: 
+and r6 r2                              #current_bit = temp & 0b1
+mov r7 r0                             #current bit stored in r7
+lsr r6 0b1                             #temp = temp >> 1
+xor r5 r7
+mov r5 r0                             #res = res ^ current_bit
+add r4 r2			# counter++
+condition: 
+xor r4 15		# check for while loop
+bne start			# loop back
+xor r5 r3
+bne Label1                             #if (res != p0)
+set r4 0b1                         #
+lsr  r1 0b1                            #
+bne condition2			# jump to condition
+start2: 
+and r6 r2                              #current_bit = temp & 0b1
+mov r7 r0                             #current bit stored in r7		
+xor r7 r2                          #if (current_bit == 1):
+bne Label2
+xor r5 r4                    
+mov r5 r0                    # r5= r5^ counter
+Label2:
+add r4 r2			# counter++
+condition2: 
+xor r4 15		# check for while loop
+bne start2			# loop back
+
+if r5:  // if r5 is not 0 we have error bit 
+	r4= 0
+	shift_amount = 0b1
+	while (r4 != r5):  // shift 1 to the bit with error then xor to flip it 
+		shift_amount << 1
+		R4 += 1
+	data = data ^ shift_amount 
+indicator = 01
+else:
+	indicator = 00
+
+set r0 0b1
+bne else1
+
+ 
