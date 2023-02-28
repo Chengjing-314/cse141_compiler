@@ -51,6 +51,7 @@ def get_resiger(reg, num_bits):
 def get_immediate(imm, num_bits):
     if isinstance(imm, str) and imm[:2] == '0b':
         imm = int(imm, 2)
+    print(imm)
     if imm > 2**num_bits - 1:
         print(f"ERROR:Invalid immediate number {imm} (max {2**num_bits - 1})\n")
         return None
@@ -86,11 +87,15 @@ def assemble_program(source_file, desination_file, label_dict, line_number_dict)
                 if cur_line[0].lower() == 'bne':
                     op1 = '0'
                     label_line = get_line_number(cur_line[1], label_dict)
-                    op2 = get_immediate(label_line, 5)
+                    #FIXME:
+                    # op2 = get_immediate(label_line, 5)
+                    op2 = get_immediate(0, 5)
                 else: 
                     op1 = '1'
-                    print(cur_line)
-                    op2 = get_immediate(cur_line[1], 5)
+                    # print(cur_line)
+                    # op2 = get_immediate(cur_line[1], 5)
+                    #FIXME:
+                    op2 = get_immediate(0, 5)
             else:
                 op1 = '000',
                 op2 = '000'
