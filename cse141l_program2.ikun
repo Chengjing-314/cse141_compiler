@@ -1,0 +1,113 @@
+set 0 		# r1 = data
+mov r1 r0	
+set 1		# prepare to set up p0
+and r0 r1	# p0 = data & 0b1
+mov r2 r0	# r2 = p0
+set 0		# r3 = counter = 0
+mov r3 r0	# r3 = counter
+set 0		# r4 = res = 0
+mov r4 r0	# r4 = res
+mov r0 r1	# bring data to prepare for temp
+lsr r0 1	# data >> 1
+mov r5 r0	# r5 = temp = data >> 1
+set 1		# while loop start
+bne condition1
+while_loop:
+set 1		# set up 0b1
+and r0 r5	# temp & 0b1
+mov r6 r0	# r6 = current_bit = temp & 0b1
+lsr r5 1	# temp >> 1
+xor r4 r6	# res ^ current_bit
+mov r4 r0	# r4 = res = res ^ current_bit
+set 1		# counter++
+add r3 r0	
+condition1:
+set 0b01111	# r0 = 15 (0b01111)
+xor r0 r3	# check counter == 15?
+bne while_loop
+xor r4 r2	# res ^ p0
+bne if_not_equal
+set 1		# counter = 1
+mov r3 r0	# r3 = counter = 1
+mov r0 r1	# r0 = data
+lsr r0 1	# data >> 1
+mov r5 r0	# r5 = temp = data >> 1
+set 1		# prepare for while
+bne condition2
+while_loop2:
+set 1		# set up 0b1
+and r0 r5	# r0 = temp & 0b1
+mov r6 r0	# r6 = current_bit = temp & 0b1
+bne inner_if
+set 1		# skip the if statement
+bne end_inner_if
+inner_if:
+xor r4 r3	# res ^ counter
+mov r4 r0	# res = res ^ counter
+end_inner_if:
+set 1		# TO ASK: COUNTER++????
+add r3 r0	# counter++
+condition2:
+set 0b01111	# r0 = 15 (0b01111)
+xor r0 r3	# check counter == 15?
+bne while_loop
+mov r0 r4	# if r4 == 1 go to else
+bne second_else
+set 0		# counter = 0
+mov r3 r0	# r3 = counter = 0
+set 0b1		# shift_amount = 0b1
+mov r7 r0	# r7 = shift_amount = 0b1 (temporary)
+set 1		# go to while loop check
+bne condition3
+error_check_while:
+lsl r7 1	# shift_amount << 1
+set 1		# set up counter = 1
+add r3 r0	# counter++
+condition3:
+xor r3 r4	# counter ^ res check if they are equal
+bne error_check_while # branch to while
+xor r1 r7	# data ^ shift_amount
+mov r1 r0	# r1 = data = data ^ shift_amount
+set 0b01	# indicator = 0b01
+mov r7 r0	# r7 = indicator = 0b01
+set 1		# skip the else statement
+bne end_second_if
+second_else:
+set 0b00	# indicator = 0b00
+mov r7 r0	# r7 = indicator = 0b00
+end_second_if:
+set 1		# skip the if part 
+bne end_if:
+if_not_equal:
+set 0b10		# indicator = 0b10
+mov r7 r0	# r7 = indicator
+end_if:
+set 0b01000	# set 0b1111111000000000 LUT
+and r0 r1	# r0 = data & 0b1111111000000000
+lsr r0 2	# r0 >> 2
+lsr r0 2	# ro >> 2
+mov r2 r0	# r2 = d11_5
+set 0b01001	# set 0b0000000001110000 LUT
+and r0 r1	# r0 = data & 0b0000000001110000
+lsr r0 2	# r0 >> 2
+lsr r0 1	# r0 >> 1
+mov r3 r0	# r3 = d4_2
+set 0b01010	# set 0b0000000000001000 LUT
+and r0 r1	# r0 = data ^ 0b0000000000001000
+lsr r0 2	# r0 >> 2
+mov r4 r0	# r4 = d1
+lsl r7 2	# indicator << 12
+lsl r7 2
+lsl r7 2
+lsl r7 2
+lsl r7 2
+lsl r7 2
+set 0		# empty r5 for return
+mov r5 r0	
+add r5 r2	# r5 = d11_5
+add r5 r3	# r5 = d11_5 + d4_2
+set 1		# prepare to add 1
+add r5 r0	# r5 = d11_5 + d4_2 + 1
+add r5 r4	# r5 = d11_5 + d4_2 + 1 + d1
+add r5 r7	# r5 = d11_5 + d4_2 + 1 + d1 + indicator
+mov r0 r5	# get r0 to return
