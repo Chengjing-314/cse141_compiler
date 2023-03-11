@@ -13,7 +13,7 @@ mov r5 r0   # r5 = temp = data >> 1
 set 1       # while loop start
 bne condition1
 while_loop:
-set 1		# set up 0b1
+set 1       # set up 0b1
 and r0 r5   # temp & 0b1
 mov r6 r0   # r6 = current_bit = temp & 0b1
 lsr r5 1    # temp >> 1
@@ -22,7 +22,7 @@ mov r4 r0   # r4 = res = res ^ current_bit
 set 1       # counter++
 add r3 r0	
 condition1:
-set 0b01111	# r0 = 15 (0b01111)
+set 0b01111 # r0 = 15 (0b01111)
 xor r0 r3   # check counter == 15?
 bne while_loop
 xor r4 r2   # res ^ p0
@@ -45,10 +45,10 @@ inner_if:
 xor r4 r3   # res ^ counter
 mov r4 r0   s# res = res ^ counter
 end_inner_if:
-set 1		# TO ASK: COUNTER++????
+set 1       # TO ASK: COUNTER++????
 add r3 r0   # counter++
 condition2:
-set 0b01111	# r0 = 15 (0b01111)
+set 0b01111 # r0 = 15 (0b01111)
 xor r0 r3   # check counter == 15?
 bne while_loop
 mov r0 r4   # if r4 == 1 go to else
@@ -87,12 +87,12 @@ and r0 r1   # r0 = data & 0b1111111000000000
 lsr r0 2    # r0 >> 2
 lsr r0 2    # ro >> 2
 mov r2 r0   # r2 = d11_5
-set 0b01001	# set 0b0000000001110000 LUT
+set 0b01001 # set 0b0000000001110000 LUT
 and r0 r1   # r0 = data & 0b0000000001110000
 lsr r0 2    # r0 >> 2
 lsr r0 1    # r0 >> 1
 mov r3 r0   # r3 = d4_2
-set 0b01010	# set 0b0000000000001000 LUT
+set 0b01010 # set 0b0000000000001000 LUT
 and r0 r1   # r0 = data ^ 0b0000000000001000
 lsr r0 2    # r0 >> 2
 mov r4 r0   # r4 = d1
