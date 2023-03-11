@@ -42,11 +42,11 @@ def label_look_up_table(line_number):
     
     look_up_line = look_up_table.get(line_number, None)
     
-    if not look_up_line:
+    if look_up_line == None:
         print(f"ERROR:Invalid line number {line_number} NO LOOK UP TABLE ENTRY FOUND\n")
         return None
     
-    return get_immediate(look_up_line + 1, 5)
+    return get_immediate(look_up_line, 5)
 
     
     
