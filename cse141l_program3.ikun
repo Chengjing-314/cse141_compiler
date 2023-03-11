@@ -6,18 +6,18 @@ set 0 # str[1] = counter = 0b10001
 set 0 # str[2] = pattern = 0b10010
 set 0 			# r1 = counter = 0
 mov r1 r0
-set 0			# r2 = byte_cnt = 0
+set 0           # r2 = byte_cnt = 0
 mov r2 r0
-set 0			# r3 = byte_occ = 0
+set 0           # r3 = byte_occ = 0
 mov r3 r0
 set 1           # branch to condition
 bne condition1
 outer_loop:
 set 0b10001 # load counter
 lw r1 r0   # r1 = counter
-set 0
+set 0       
 mov r4 r0   # r4 = inner = 0
-set 0
+set 0   
 mov r5 r0   # r5 = occ_flag = 0
 mov r0 r7   # r0 = data[0]
 add r0 r1   # data[0] -> data[counter]
@@ -66,10 +66,10 @@ set 0       # r0 = 0
 mov r1 r0   # counter = 0
 set 0b10001 # clear counter in str[]
 sw r1 r0   # clear counter
-set 0b11011 # set 33(11011)
+set 0b11011     # set 33(11011)
 add r0 r7   # r0 = data[33]
 sw r2 r0   # data[33] = byte_cnt
-set 0b11100 # set 34(11100)
+set 0b11100     # set 34(11100)
 add r0 r7   # r0 = data[34]
 sw r3 r0   # data[34] = byte_occ
 set 0       # r0 = 0
@@ -112,7 +112,7 @@ set 0b11111 # r0 = 0b11111
 xor r0 r6   # r0 = 0b11111 ^ new_dt
 mov r5 r0   # R5 = current (inner only)
 lsr r6 1    # new_dt >> 1
-set 0b10010 # r0 = str[3] = pattern
+set 0b10010     # r0 = str[3] = pattern
 lw r3 r0    # r3(temp) = str[3] = pattern
 xor r6 r3   # check current == pattern
 bne endif2  # if not equal we branch

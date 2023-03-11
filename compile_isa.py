@@ -5,6 +5,52 @@ import argparse
 class ji_ni_tai_mei_exception(Exception):
     pass
 
+def label_look_up_table(line_number):
+    
+    look_up_table = {
+        1: 0, 
+        2: 1,
+        29: 3, 
+        38: 4,
+        43: 5,
+        72: 6,
+        81: 7,
+        15: 8,
+        24: 9,
+        37: 10,
+        44: 11,
+        47: 12,
+        50: 13,
+        62: 14,
+        66: 15,
+        75: 16,
+        78: 17,
+        81: 18,
+        84: 19,
+        27: 20,
+        58: 21,
+        64: 22,
+        79: 23,
+        110: 24,
+        121: 25,
+        124: 26,
+        130: 27,
+        134: 28,
+        3: 29,
+        4: 30,
+        5: 31,}
+    
+    look_up_line = look_up_table.get(line_number, None)
+    
+    if not look_up_line:
+        print(f"ERROR:Invalid line number {line_number} NO LOOK UP TABLE ENTRY FOUND\n")
+        return None
+    
+    return get_immediate(look_up_line + 1, 5)
+
+    
+    
+
 
 def get_operator(op):
     operators = {
@@ -38,6 +84,7 @@ def get_operator(op):
     return operators[op], operator_types[op]
     
 def get_resiger(reg, num_bits):
+    #print(reg)
     if reg[0] != 'r':
         return None
     else :
@@ -51,7 +98,7 @@ def get_resiger(reg, num_bits):
 def get_immediate(imm, num_bits):
     if isinstance(imm, str) and imm[:2] == '0b':
         imm = int(imm, 2)
-    print(imm)
+    imm = int(imm)
     if imm > 2**num_bits - 1:
         print(f"ERROR:Invalid immediate number {imm} (max {2**num_bits - 1})\n")
         return None
@@ -64,7 +111,7 @@ def assemble_program(source_file, desination_file, label_dict, line_number_dict)
     res = ''
     try:
         for line in lines:
-            print(line_number)
+            #print(line_number)
             
             if line_number_dict.get(line_number, None):
                 line_number += 1
@@ -87,15 +134,13 @@ def assemble_program(source_file, desination_file, label_dict, line_number_dict)
                 if cur_line[0].lower() == 'bne':
                     op1 = '0'
                     label_line = get_line_number(cur_line[1], label_dict)
-                    #FIXME:
-                    # op2 = get_immediate(label_line, 5)
-                    op2 = get_immediate(0, 5)
+                    op2 = label_look_up_table(label_line)
                 else: 
                     op1 = '1'
-                    # print(cur_line)
-                    # op2 = get_immediate(cur_line[1], 5)
-                    #FIXME:
-                    op2 = get_immediate(0, 5)
+                    #print(cur_line)
+                    op2 = get_immediate(cur_line[1], 5)
+                    #print(cur_line[1])
+                    # op2 = get_immediate(0, 5)
             else:
                 op1 = '000',
                 op2 = '000'
@@ -136,14 +181,14 @@ def sweep_labels(source_file):
             label_dict[cur_op[:-2]] = line_number
             line_number_dict[line_number] = cur_op
         elif cur_op not in op_keys:
-            print(cur_op[-1])
+            #print(cur_op[-1])
             raise ji_ni_tai_mei_exception(f"line {line_number} : Invalid OP: {cur_op}")
         line_number += 1
     
     return label_dict, line_number_dict
         
 def get_line_number(label, label_dict):
-    return label_dict[label.lower().strip(' \n:')] + 1
+    return label_dict[label.lower().strip(' \n:')]
 
 def main(args):
     source_file = args.f
@@ -161,6 +206,7 @@ def main(args):
         return
     
     label_dict, line_number_dict = sweep_labels(sf)
+    #print(label_dict)
     sf.seek(0) # reset file pointer
     assemble_program(sf, df, label_dict, line_number_dict)
     
