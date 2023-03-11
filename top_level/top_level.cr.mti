@@ -1,0 +1,78 @@
+E:/top_level/top_level.sv {1 {vlog -work work -sv -stats=none E:/top_level/top_level.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module top_level
+
+Top level modules:
+	top_level
+
+} {} {}} E:/top_level/cu_tb.sv {1 {vlog -work work -sv -stats=none E:/top_level/cu_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module cu_tb
+
+Top level modules:
+	cu_tb
+
+} {} {}} E:/top_level/top_level_tb.sv {1 {vlog -work work -sv -stats=none E:/top_level/top_level_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module top_level_tb
+
+Top level modules:
+	top_level_tb
+
+} {} {}} E:/top_level/alu.sv {1 {vlog -work work -sv -stats=none E:/top_level/alu.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module alu
+
+Top level modules:
+	alu
+
+} {} {}} E:/top_level/PC.sv {1 {vlog -work work -sv -stats=none E:/top_level/PC.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module PC
+
+Top level modules:
+	PC
+
+} {} {}} E:/top_level/reg_file.sv {1 {vlog -work work -sv -stats=none E:/top_level/reg_file.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module reg_file
+
+Top level modules:
+	reg_file
+
+} {} {}} E:/top_level/instr_ROM.sv {1 {vlog -work work -sv -stats=none E:/top_level/instr_ROM.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module instr_ROM
+
+Top level modules:
+	instr_ROM
+
+} {} {}} E:/top_level/alu_tb.sv {1 {vlog -work work -sv -stats=none E:/top_level/alu_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module alu_tb
+
+Top level modules:
+	alu_tb
+
+} {} {}} E:/top_level/dat_mem.sv {1 {vlog -work work -sv -stats=none E:/top_level/dat_mem.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module dat_mem
+
+Top level modules:
+	dat_mem
+
+} {} {}} E:/top_level/PC_LUT_2.sv {1 {vlog -work work -sv -stats=none E:/top_level/PC_LUT_2.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module PC_LUT_2
+
+Top level modules:
+	PC_LUT_2
+
+} {} {}} E:/top_level/Control.sv {1 {vlog -work work -sv -stats=none E:/top_level/Control.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Control
+
+Top level modules:
+	Control
+
+} {} {}}
