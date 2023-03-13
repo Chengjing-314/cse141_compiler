@@ -1,6 +1,28 @@
 import os
 import argparse
-
+#                       _oo0oo_
+#                      o8888888o
+#                      88" . "88
+#                      (| -_- |)
+#                      0\  =  /0
+#                    ___/`---'\___
+#                  .' \\|     |# '.
+#                 / \\|||  :  |||# \
+#                / _||||| -:- |||||- \
+#               |   | \\\  -  #/ |   |
+#               | \_|  ''\---/''  |_/ |
+#               \  .-\__  '-'  ___/-. /
+#             ___'. .'  /--.--\  `. .'___
+#          ."" '<  `.___\_<|>_/___.' >' "".
+#         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+#         \  \ `_.   \_ __\ /__ _/   .-` /  /
+#     =====`-.____`.___ \_____/___.-`___.-'=====
+#                       `=---='
+#
+#
+#     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#               佛祖保佑         永无BUG
 
 class ji_ni_tai_mei_exception(Exception):
     pass
@@ -174,12 +196,13 @@ def sweep_labels(source_file):
     label_dict = {}
     line_number_dict = {}
     line_number = 1
+    branch_offset = 1
     for line in lines:
         cur_line = line.split(' ')
         cur_op = cur_line[0].lower()
         if cur_op not in op_keys and cur_op[-2] == ':':
-            label_dict[cur_op[:-2]] = line_number
-            line_number_dict[line_number] = cur_op
+            label_dict[cur_op[:-2]] = line_number - branch_offset
+            line_number_dict[line_number - branch_offset] = cur_op
         elif cur_op not in op_keys:
             #print(cur_op[-1])
             raise ji_ni_tai_mei_exception(f"line {line_number} : Invalid OP: {cur_op}")
@@ -206,7 +229,7 @@ def main(args):
         return
     
     label_dict, line_number_dict = sweep_labels(sf)
-    #print(label_dict)
+    print(label_dict)
     sf.seek(0) # reset file pointer
     assemble_program(sf, df, label_dict, line_number_dict)
     
