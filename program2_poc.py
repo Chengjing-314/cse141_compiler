@@ -2,14 +2,13 @@ def hamming_decode(data1, data2):
     tmp_data1 = data1
     tmp_data2 = data2
     
-    p0 = tmp_data2 & 1
-    
     p0_check = 0
     cnt = 0 
     while (cnt < 8):
         p0_check = p0_check ^ (tmp_data1 & 1)
         tmp_data1 = tmp_data1 >> 1
         cnt = cnt + 1
+        
     cnt = 0 
     while (cnt < 8): 
         p0_check = p0_check ^ (tmp_data2 & 1)
@@ -36,18 +35,20 @@ def hamming_decode(data1, data2):
             res = res ^ cnt 
         cnt = cnt + 1
         
+    print("res: ", format(res, 'b'))
+        
     indicator = 0
     
-    if (p0_check == p0 and res == 0):
+    if (p0_check == 0 and res == 0):
         print("No error")
         indicator = 0b00000000
         
         
-    elif (p0_check == p0 and res != 0):
+    elif (p0_check == 0 and res != 0):
         print("Two errors")
         indicator = 0b11000000
         
-    elif (p0_check != p0 and res == 0):
+    elif (p0_check != 0 and res == 0):
         print("One error at parity bit 0")
         data2 = data2 ^ 1
         indicator = 0b01000000
@@ -82,7 +83,7 @@ def hamming_decode(data1, data2):
     print(str_data_1 + str_data_2)
 
 
-hamming_decode(0b11111111 , 0b11110000)
+hamming_decode(0b00000000 , 0b00001111)
         
         
     
