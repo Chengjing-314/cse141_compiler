@@ -1,10 +1,11 @@
 set 0
 mov r3 r0
-set 0b10 # set 70 using LUT
+set 0b10    # set 70 using LUT
 sw r3 r0
 set 1
 bne condition5
-start5: set 0b10
+start5:
+set 0b10
 lw r3 r0
 set 1
 add r3 r3
@@ -44,7 +45,8 @@ set 0
 mov r5 r0   # r5 = res = 0
 set 1
 bne condition
-start: set 1       # while start
+start:
+set 1       # while start
 and r0 r1
 mov r6 r0   # r6 = cbit = temp_data1 & 1
 lsr r1 1    # temp_data1 >> 1
@@ -55,7 +57,8 @@ xor r5 r4   # res = res ^ cnt
 mov r5 r0
 if1: set 1
 add r4 r0   # cnt++
-condition: set 0b10000  # set r0 to be 16
+condition:
+set 0b10000 # set r0 to be 16
 xor r0 r4   # check if counter is 16
 bne start
 lsr r2 1    # temp_data2 = temp_data2 >> 1
@@ -63,7 +66,8 @@ set 1
 mov r4 r0   # cnt = 1
 set 1
 bne condition2
-start2: set 1
+start2:
+set 1
 and r0 r2   # r6 = cbit = temp_data2 & 1
 mov r6 r0   # r6 = cbit = temp_data2 & 1
 lsr r2 1    # temp_data1 >> 1
@@ -72,9 +76,11 @@ xor r6 r0   # if cbit == 1
 bne if2
 xor r5 r4   # res = res ^ cnt
 mov r5 r0
-if2: set 1
-add r4 r0   # cnt++condition2:
-set 0b1000   # set r0 to be 8
+if2: 
+set 1
+add r4 r0   # cnt++
+condition2:
+set 0b1000  # set r0 to be 8
 xor r0 r4   # check if counter is 8
 bne start2
 set 0b11
@@ -104,28 +110,32 @@ mov r2 r6
 mov r1 r7
 set 1
 bne condition3
-start3: set 1
+start3: 
+set 1
 and r1 r0   # temp_data1 & 1
 xor r3 r0
 mov r3 r0   # parity_0 = parity_0 ^ (temp_data1 & 1)
 lsr r1 1    # temp_data1 = temp_data1 >> 1
 set 1
 add r4 r0   # cnt++
-condition3: set 8
+condition3: 
+set 8
 xor r4 r0
 bne start3
 set 0
 mov r4 r0   # r4 := cnt = 0
 set 1
 bne condition4
-start4: set 1
+start4: 
+set 1
 and r2 r0   # temp_data2 & 1
 xor r3 r0
 mov r3 r0   # parity_0 = parity_0 ^ (temp_data2 & 1)
 lsr r2 1    # temp_data2 = temp_data2 >> 1
 set 1
 add r4 r0   # cnt++
-condition4: set 8
+condition4: 
+set 8
 xor r4 r0
 bne start4
 add r6 r3   # data_2 = data_2 + parity_0
@@ -145,9 +155,10 @@ set 1
 add r3 r0
 set 0b10
 sw r3 r0
-condition5: set 0b10
+condition5: 
+set 0b10
 lw r3 r0
-set 1   # change to 15 later
+set 1       # change to 15 later
 mov r4 r0
 xor r4 r3
 bne start5
