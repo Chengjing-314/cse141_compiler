@@ -1,86 +1,153 @@
-set 0b11111 		# set r0 to be 11111
-lsl r0 2 		    # shift r0 left 4 bits
-lsl r0 2 		    
-mov r1 r0 			# move r0 to r1
-set 0b11000 		# set r0 to be 11000
-lsl r0 1 		    # shift r0 left 1 bit create 7 bit mask
-add r0 r1 			# r0 holds mask to extrac 11-5 bits
-and r0 r7           # extract (temp_11_5)
-mov r6 r0           # r6 holds temp_11_5
-set 0b1110          # set r0 to be 1110
-lsl r0 3            # shift r0 left 3 create 3 bit mask
-and r0 r7           # extract (temp_4_1)
-mov r5 r0           # r5 holds temp_4_1
-set 0b1             # set r0 to be 1
-lsl r0 2            # shift r0 left 2 bits create 1 bit mask 
-and r0 r7           # extract (temp_1)
-mov r0 r4           # r4 holds temp_1
-add r4 r5           # r0 holds temp_1 + temp_4_1
-add r0 r6           # r0 holds temp_1 + temp_4_1 + temp_11_5
-mov r7 r0           # r7 holds formated data (formated_data)
-set 0b0             # set r0 to be 0
-mov r0 r6           # r6 holds 0 as counter 
-set 0b0             # set r0 to be 0
-mov r0 r5           # r5 holds 0 as result
-set 0b10000         # set r0 to be 10000(16)
-mov r4 r7           # r4 holds formated_data as copy 
-set 0b1             # set r0 to be 1
+set 0
+mov r3 r0
+set 0b10 # set 70 using LUT
+sw r3 r0
+set 1
+bne condition5
+start5: set 0b10
+lw r3 r0
+set 1
+add r3 r3
+add r0 r3
+lw r1 r0    # load r1 = temp_data1 -> data[11:9]
+set 0
+add r3 r3
+add r0 r3
+lw r2 r0    # load r2 = temp_data2
+lsl r1 3
+lsl r1 2    # temp_data1 << 5
+set 0b1111  
+lsl r0 2
+lsl r0 2
+and r0 r2   # temp_data2 & 0b11110000
+mov r3 r0   # r3 = temp_data2 & 0b11110000
+lsr r3 3    # r3 = upper4
+add r1 r3   # temp_data1 = temp_data1 + upper4
+set 0b1110
+and r2 r0
+mov r4 r0   # r4 = data_2_4_2
+lsl r4 2
+lsl r4 2
+set 1
+and r2 r0
+mov r5 r0   # r5 = data_2_1
+lsl r5 3
+add r4 r5   # r4 cleared
+mov r2 r4   # r2 := temp_data2 = data_2_4_2 + data_2_1
+set 0b11    #71
+sw r1 r0    # data_1 = temp_data1
+set 0b101   #72
+sw r2 r0    # data_2 = temp_data2
+set 8
+mov r4 r0   # r4 = cnt = 8
+set 0
+mov r5 r0   # r5 = res = 0
+set 1
 bne condition
-start:
-set 0b1             # set r0 to be 1
-and r0 r4           # extract bottom bit
-mov r3 r0           # r3 holds bottom bit
-set 0b1             # set r0 to be 1
-xor r0 r3           # flip our result 
-bne else
-xor r5 r6           # xor result 
-mov r0 r5           # move the result back
-else:
-set 0b1 
-add r0 r6           # increment counter
-mov r6 r0           # move counter back
-lsr r4 1            # shift right 1 bit 
-condition:
-set 0b10000         # set r0 to be 10000(16)
-xor r0 r6           # check if counter is 16
-bne start           # if not 16 go back to start
-mov r5 r6           # r6 holds result
-set 0b11 
-and r0 r6           # extract bottom 2 bits
-mov r5 r0           # r5 holds bottom 2 bits (mask_21)
-set 0b100 
-and r0 r6           # extract 3rd bit
-mov r4 r0           # r4 holds 3rd bit (mask_4)
-set 0b1000
-and r0 r6           # extract 4th bit
-mov r3 r0           # r3 holds 4th bit (mask 8)
-lsl r5 1            # shift left 1 bit
-lsl r4 2            # shift left 2 bits
-lsl r3 2            # shift left 4 bits
-lsl r3 2            
-add r5 r4           # r0 holds mask_21 + mask_4
-add r0 r3           # r0 holds mask_21 + mask_4 + mask_8
-add r0 r7           # r0 holds formated_data + mask_21 + mask_4 + mask_8
-mov r7 r0           # r7 holds formated_data + mask_21 + mask_4 + mask_8
-mov r6 r7           # copy r7 
-set 0b0             
-mov r5 r0           # r5 holds 0 as counter
-set 0b0 
-mov r4 r0           # r4 holds 0 as result
-set 0b1 
+start: set 1       # while start
+and r0 r1
+mov r6 r0   # r6 = cbit = temp_data1 & 1
+lsr r1 1    # temp_data1 >> 1
+set 1
+xor r6 r0   # if cbit == 1
+bne if1
+xor r5 r4   # res = res ^ cnt
+mov r5 r0
+if1: set 1
+add r4 r0   # cnt++
+condition: set 0b10000  # set r0 to be 16
+xor r0 r4   # check if counter is 16
+bne start
+lsr r2 1    # temp_data2 = temp_data2 >> 1
+set 1
+mov r4 r0   # cnt = 1
+set 1
 bne condition2
-start2:
-set 0b1             # set r0 to be 1
-and r0 r6           # extract bottom bit
-xor r0 r4           
-mov r4 r0           
-set 0b1
-add r0 r5           # increment counter
-mov r5 r0           # move counter back
-lsr r6 1            # shift right 1 bit
-condition2:
-set 0b10000         # set r0 to be 10000(16)
-xor r0 r5           # check if counter is 16
-bne start2          # if not 16 go back to start
-mov r4 r5           # r5 holds result
-add r4 r7           # r0 holds formated_data + mask_21 + mask_4 + mask_8 + result
+start2: set 1
+and r0 r2   # r6 = cbit = temp_data2 & 1
+mov r6 r0   # r6 = cbit = temp_data2 & 1
+lsr r2 1    # temp_data1 >> 1
+set 1
+xor r6 r0   # if cbit == 1
+bne if2
+xor r5 r4   # res = res ^ cnt
+mov r5 r0
+if2: set 1
+add r4 r0   # cnt++condition2:
+set 0b1000   # set r0 to be 8
+xor r0 r4   # check if counter is 8
+bne start2
+set 0b11
+and r0 r5   # res & 0b11
+lsl r0 1    # r0 << 1
+mov r3 r0   # r3 := p1_p2 = (res & 0b11) << 1
+set 0b100
+and r0 r5   # res & 0b11
+lsl r0 2    # r0 << 2
+mov r4 r0   # r4 := p4 = (res & 0b100) << 2
+set 0b1000
+and r0 r5   # res & 0b1000
+lsr r0 3    # r0 >> 3
+mov r5 r0   # r5 := p8 = (res & 0b1000) >> 3
+set 0b101   # 72
+lw r6 r0    # r6 = data_2
+add r6 r3
+add r6 r4   # data_2 = data_2 + p1_p2 + p4
+set 0b11    # 71
+lw r7 r0    # r7 = data_1
+add r7 r5   # data_1 = data_1 + p8
+set 0
+mov r3 r0   # r3 := parity_0
+set 0
+mov r4 r0   # r4 := cnt
+mov r2 r6
+mov r1 r7
+set 1
+bne condition3
+start3: set 1
+and r1 r0   # temp_data1 & 1
+xor r3 r0
+mov r3 r0   # parity_0 = parity_0 ^ (temp_data1 & 1)
+lsr r1 1    # temp_data1 = temp_data1 >> 1
+set 1
+add r4 r0   # cnt++
+condition3: set 8
+xor r4 r0
+bne start3
+set 0
+mov r4 r0   # r4 := cnt = 0
+set 1
+bne condition4
+start4: set 1
+and r2 r0   # temp_data2 & 1
+xor r3 r0
+mov r3 r0   # parity_0 = parity_0 ^ (temp_data2 & 1)
+lsr r2 1    # temp_data2 = temp_data2 >> 1
+set 1
+add r4 r0   # cnt++
+condition4: set 8
+xor r4 r0
+bne start4
+add r6 r3   # data_2 = data_2 + parity_0
+set 0b10
+lw r3 r0
+set 0b11110
+add r3 r3
+add r0 r3
+sw r6 r0    # dm1.core[30 +i*2] = data_2
+set 0b11111
+add r3 r3
+add r0 r3
+sw r7 r0    # dm1.core[31] = data_1
+set 0b10
+lw r3 r0
+set 1
+add r3 r0
+set 0b10
+sw r3 r0
+condition5: set 0b10
+lw r3 r0
+set 1   # change to 15 later
+mov r4 r0
+xor r4 r3
+bne start5
