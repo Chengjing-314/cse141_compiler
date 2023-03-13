@@ -4,7 +4,7 @@ def pattern_search(txt):
     byte_cnt = 0 
     occ_cnt = 0
     
-    pattern = txt[32] & 0x00011111
+    pattern = (txt[32] & 0b11111000) >> 3
 
     while (outer < 32):
         cur = txt[outer]
@@ -42,5 +42,7 @@ def pattern_search(txt):
     print(txt[33], txt[34], txt[35])
 
 test_data = [0] * 36
+test_data[32] = 8 # 00001000
+test_data[0] = 1 # 00000001
 
 pattern_search(test_data)
