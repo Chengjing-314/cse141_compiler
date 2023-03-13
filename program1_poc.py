@@ -79,6 +79,6 @@ def hamming_encoding(data1, data2):
     print(str_data_1 + str_data_2)
 
 
-hamming_encoding(0b00000000, 0b11110000)
+hamming_encoding(0b00000111, 0b00010000)
     
         
