@@ -39,7 +39,7 @@ def hamming_encoding(data1, data2):
     
     # data1 and data2 are formatted to 16 bits
 
-    print("res: ", format(res, 'b'))
+    
     
     p1_p2 = (res & 0b11) << 1
     p4 = (res & 0b100) << 2
@@ -47,6 +47,27 @@ def hamming_encoding(data1, data2):
     
     data_2 = data_2 + p1_p2 + p4
     data_1 = data_1 + p8
+    
+    print("res: ", format(res, 'b'))
+    
+    # calculate parity bit p0
+    parity_0 = 0 
+    cnt = 0
+    temp_data1 = data_1
+    temp_data2 = data_2
+    while (cnt < 8):
+        parity_0 = parity_0 ^ (temp_data1 & 1)
+        temp_data1 = temp_data1 >> 1
+        cnt = cnt + 1
+    
+    cnt = 0 
+    
+    while (cnt < 8):
+        parity_0 = parity_0 ^ (temp_data2 & 1)
+        temp_data2 = temp_data2 >> 1
+        cnt = cnt + 1
+    
+    data_2 = data_2 + parity_0
     
     str_data_2 = format(data_2, 'b')
     if len(str_data_2) < 8:
