@@ -40,6 +40,7 @@ def hamming_decode(data1, data2):
     
     if (p0_check == p0 and res == 0):
         print("No error")
+        indicator = 0b00000000
         
         
     elif (p0_check == p0 and res != 0):
@@ -61,10 +62,10 @@ def hamming_decode(data1, data2):
         indicator = 0b01000000
             
 
-    data_2_4_2 = (data2 & 0b11100000) >> 5
+    data_2_4_2 = (data2 & 0b11100000) >> 4 # 11100000 -> 00001110
     data_2_1 = (data2 & 0b1000) >> 3
     
-    data_1_8_5 = data1 & 0b00011110
+    data_1_8_5 = (data1 & 0b00011110) << 3 # 00011110 -> 11110000
     data1 = data1 >> 5 
     data2 = data_2_4_2 + data_2_1 + data_1_8_5
     
@@ -81,7 +82,7 @@ def hamming_decode(data1, data2):
     print(str_data_1 + str_data_2)
 
 
-hamming_decode(0b11100010 , 0b00010010)
+hamming_decode(0b11111111 , 0b11110000)
         
         
     
