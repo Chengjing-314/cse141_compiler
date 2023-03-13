@@ -62,13 +62,15 @@ def label_look_up_table(line_number):
         4: 30,
         5: 31,}
     
+    # FIXME: This is a hack to get the program to compile
+    
     look_up_line = look_up_table.get(line_number, None)
     
-    if look_up_line == None:
-        print(f"ERROR:Invalid line number {line_number} NO LOOK UP TABLE ENTRY FOUND\n")
-        return None
+    # if look_up_line == None:
+    #     print(f"ERROR:Invalid line number {line_number} NO LOOK UP TABLE ENTRY FOUND\n")
+    #     return None
     
-    return get_immediate(look_up_line, 5)
+    return get_immediate(0, 5)
 
     
     
@@ -126,7 +128,7 @@ def get_immediate(imm, num_bits):
         return None
     return bin(imm)[2:].zfill(num_bits)
 
-def assemble_program(source_file, desination_file, label_dict, line_number_dict):
+def assemble_program(source_file, desination_file, label_dict):
     lines = source_file.readlines()
     total_lines = len(lines)
     line_number = 1
@@ -135,7 +137,7 @@ def assemble_program(source_file, desination_file, label_dict, line_number_dict)
         for line in lines:
             #print(line_number)
             
-            if line_number_dict.get(line_number, None):
+            if label_dict.get((line.split(' '))[0][:-2].lower(), None):
                 line_number += 1
                 continue
             
@@ -208,7 +210,7 @@ def sweep_labels(source_file):
             raise ji_ni_tai_mei_exception(f"line {line_number} : Invalid OP: {cur_op}")
         line_number += 1
     
-    return label_dict, line_number_dict
+    return label_dict
         
 def get_line_number(label, label_dict):
     return label_dict[label.lower().strip(' \n:')]
@@ -228,10 +230,10 @@ def main(args):
         print('ABORT: Destination file is not empty')
         return
     
-    label_dict, line_number_dict = sweep_labels(sf)
+    label_dict = sweep_labels(sf)
     print(label_dict)
     sf.seek(0) # reset file pointer
-    assemble_program(sf, df, label_dict, line_number_dict)
+    assemble_program(sf, df, label_dict)
     
     df.close()
     sf.close()

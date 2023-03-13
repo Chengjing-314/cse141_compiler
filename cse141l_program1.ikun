@@ -55,7 +55,8 @@ xor r6 r0   # if cbit == 1
 bne if1
 xor r5 r4   # res = res ^ cnt
 mov r5 r0
-if1: set 1
+if1:
+set 1
 add r4 r0   # cnt++
 condition:
 set 0b10000 # set r0 to be 16
@@ -76,7 +77,7 @@ xor r6 r0   # if cbit == 1
 bne if2
 xor r5 r4   # res = res ^ cnt
 mov r5 r0
-if2: 
+if2:
 set 1
 add r4 r0   # cnt++
 condition2:
@@ -110,7 +111,7 @@ mov r2 r6
 mov r1 r7
 set 1
 bne condition3
-start3: 
+start3:
 set 1
 and r1 r0   # temp_data1 & 1
 xor r3 r0
@@ -118,7 +119,7 @@ mov r3 r0   # parity_0 = parity_0 ^ (temp_data1 & 1)
 lsr r1 1    # temp_data1 = temp_data1 >> 1
 set 1
 add r4 r0   # cnt++
-condition3: 
+condition3:
 set 8
 xor r4 r0
 bne start3
@@ -126,7 +127,7 @@ set 0
 mov r4 r0   # r4 := cnt = 0
 set 1
 bne condition4
-start4: 
+start4:
 set 1
 and r2 r0   # temp_data2 & 1
 xor r3 r0
@@ -134,7 +135,7 @@ mov r3 r0   # parity_0 = parity_0 ^ (temp_data2 & 1)
 lsr r2 1    # temp_data2 = temp_data2 >> 1
 set 1
 add r4 r0   # cnt++
-condition4: 
+condition4:
 set 8
 xor r4 r0
 bne start4
@@ -155,7 +156,7 @@ set 1
 add r3 r0
 set 0b10
 sw r3 r0
-condition5: 
+condition5:
 set 0b10
 lw r3 r0
 set 1       # change to 15 later
