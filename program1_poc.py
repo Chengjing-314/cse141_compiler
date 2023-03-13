@@ -12,7 +12,7 @@ def hamming_encoding(data1, data2):
     temp_data1 = temp_data1 + upper4
     
     data_2_4_2 = temp_data2 & 0b1110
-    data_2_4_2 = data_2_4_2 << 4
+    data_2_4_2 = data_2_4_2 << 4 
     data_2_1 = temp_data2 & 0b1
     data_2_1 = data_2_1 << 3
     temp_data2 = data_2_4_2 + data_2_1
@@ -29,6 +29,7 @@ def hamming_encoding(data1, data2):
             res = res ^ cnt 
         cnt = cnt + 1
     
+    temp_data2 = temp_data2 >> 1
     cnt = 1
     while (cnt <= 7):
         cbit = temp_data2 & 1
@@ -79,6 +80,6 @@ def hamming_encoding(data1, data2):
     print(str_data_1 + str_data_2)
 
 
-hamming_encoding(0b00000111, 0b00010000)
+hamming_encoding(0b00000000, 0b00000001)
     
         
