@@ -107,7 +107,7 @@ def get_operator(op):
     
     return operators[op], operator_types[op]
     
-def get_resiger(reg, num_bits):
+def get_register(reg, num_bits):
     #print(reg)
     if reg[0] != 'r':
         return None
@@ -128,7 +128,7 @@ def get_immediate(imm, num_bits):
         return None
     return bin(imm)[2:].zfill(num_bits)
 
-def assemble_program(source_file, desination_file, label_dict):
+def assemble_program(source_file, destination_file, label_dict):
     lines = source_file.readlines()
     total_lines = len(lines)
     line_number = 1
@@ -146,10 +146,10 @@ def assemble_program(source_file, desination_file, label_dict):
             op, optype = get_operator(cur_line[0].lower())
             op1, op2 = None, None
             if optype == 'R':
-                op1 = get_resiger(cur_line[1], 3)
-                op2 = get_resiger(cur_line[2], 3)
+                op1 = get_register(cur_line[1], 3)
+                op2 = get_register(cur_line[2], 3)
             elif optype == 'I':
-                op1 = get_resiger(cur_line[1], 3)
+                op1 = get_register(cur_line[1], 3)
                 if cur_line[0].lower() == 'lsl':
                     op2 = '0'+ get_immediate(int(cur_line[2]), 2)
                 else:
@@ -180,15 +180,15 @@ def assemble_program(source_file, desination_file, label_dict):
             
             line_number += 1
             
-        desination_file.write(res)
+        destination_file.write(res)
     
     except ji_ni_tai_mei_exception as e:
         print(str(e))
-        os.remove(desination_file)
+        os.remove(destination_file)
         return           
     
     except Exception as e:
-        os.remove(desination_file)
+        os.remove(destination_file)
         raise(e)
     
 def sweep_labels(source_file):
@@ -218,13 +218,13 @@ def get_line_number(label, label_dict):
 
 def main(args):
     source_file = args.f
-    desination_file = args.o
+    destination_file = args.o
     if not os.path.exists(source_file):
         print('Error: Source file does not exist')
         return
     
     sf = open(source_file, 'r')
-    df = open(desination_file, 'w+')
+    df = open(destination_file, 'w+')
     
     # check if destination file have content
     if df.readlines():
