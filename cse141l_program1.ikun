@@ -1,18 +1,18 @@
 set 0
 mov r3 r0
-set 0b10    # set 70 using LUT
+set 0b110    # set 70 using LUT
 sw r3 r0
 set 1
 bne condition5
 start5:
-set 0b10
+set 0b110
 lw r3 r0
 set 1
 add r3 r3
 add r0 r3
 lw r1 r0    # load r1 = temp_data1 -> data[11:9]
 set 0
-add r3 r3
+set 0
 add r0 r3
 lw r2 r0    # load r2 = temp_data2
 lsl r1 3
@@ -35,11 +35,11 @@ mov r5 r0   # r5 = data_2_1
 lsl r5 3
 add r4 r5   # r4 cleared
 mov r2 r4   # r2 := temp_data2 = data_2_4_2 + data_2_1
-set 0b11    #71
+set 0b111    #71
 sw r1 r0    # data_1 = temp_data1
 set 0b101   #72
 sw r2 r0    # data_2 = temp_data2
-set 8
+set 0b1000
 mov r4 r0   # r4 = cnt = 8
 set 0
 mov r5 r0   # r5 = res = 0
@@ -89,7 +89,7 @@ and r0 r5   # res & 0b11
 lsl r0 1    # r0 << 1
 mov r3 r0   # r3 := p1_p2 = (res & 0b11) << 1
 set 0b100
-and r0 r5   # res & 0b11
+and r0 r5   # res & 0b100
 lsl r0 2    # r0 << 2
 mov r4 r0   # r4 := p4 = (res & 0b100) << 2
 set 0b1000
@@ -100,7 +100,7 @@ set 0b101   # 72
 lw r6 r0    # r6 = data_2
 add r6 r3
 add r6 r4   # data_2 = data_2 + p1_p2 + p4
-set 0b11    # 71
+set 0b111    # 71
 lw r7 r0    # r7 = data_1
 add r7 r5   # data_1 = data_1 + p8
 set 0
@@ -120,7 +120,7 @@ lsr r1 1    # temp_data1 = temp_data1 >> 1
 set 1
 add r4 r0   # cnt++
 condition3:
-set 8
+set 0b1000
 xor r4 r0
 bne start3
 set 0
@@ -136,30 +136,30 @@ lsr r2 1    # temp_data2 = temp_data2 >> 1
 set 1
 add r4 r0   # cnt++
 condition4:
-set 8
+set 0b1000
 xor r4 r0
 bne start4
 add r6 r3   # data_2 = data_2 + parity_0
-set 0b10
+set 0b110
 lw r3 r0
 set 0b11110
 add r3 r3
 add r0 r3
 sw r6 r0    # dm1.core[30 +i*2] = data_2
 set 0b11111
-add r3 r3
+set 0b11111
 add r0 r3
 sw r7 r0    # dm1.core[31] = data_1
-set 0b10
+set 0b110   # set i
 lw r3 r0
 set 1
 add r3 r0
-set 0b10
+set 0b110
 sw r3 r0
 condition5:
-set 0b10
+set 0b110
 lw r3 r0
-set 1       # change to 15 later
+set 0b1111       # change to 15 later
 mov r4 r0
 xor r4 r3
 bne start5

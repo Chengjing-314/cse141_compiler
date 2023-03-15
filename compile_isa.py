@@ -30,37 +30,38 @@ class ji_ni_tai_mei_exception(Exception):
 def label_look_up_table(line_number):
     
     look_up_table = {
-        1: 0, 
-        2: 1,
-        29: 3, 
-        38: 4,
-        43: 5,
-        72: 6,
-        81: 7,
-        15: 8,
-        24: 9,
-        37: 10,
-        44: 11,
-        47: 12,
-        50: 13,
-        62: 14,
-        66: 15,
-        75: 16,
-        78: 17,
-        81: 18,
-        84: 19,
-        27: 20,
-        58: 21,
-        64: 22,
-        79: 23,
-        110: 24,
-        121: 25,
-        124: 26,
-        130: 27,
-        134: 28,
-        3: 29,
-        4: 30,
-        5: 31,}
+        7: 0, 
+        47: 1,
+        56: 2,
+        58: 3, 
+        66: 4,
+        75: 5,
+        77: 6,
+        107: 7,
+        114: 8,
+        121: 9,
+        128: 10,
+        148: 11,
+        0: 12,
+        0: 13,
+        0: 14,
+        0: 15,
+        0: 16,
+        0: 17,
+        0: 18,
+        0: 19,
+        0: 20,
+        0: 21,
+        0: 22,
+        0: 23,
+        0: 24,
+        0: 25,
+        0: 26,
+        0: 27,
+        0: 28,
+        0: 29,
+        0: 30,
+        0: 31,}
     
     # FIXME: This is a hack to get the program to compile
     
@@ -70,7 +71,7 @@ def label_look_up_table(line_number):
     #     print(f"ERROR:Invalid line number {line_number} NO LOOK UP TABLE ENTRY FOUND\n")
     #     return None
     
-    return get_immediate(0, 5)
+    return get_immediate(look_up_line, 5)
 
     
     

@@ -56,7 +56,7 @@ always_comb begin
         RegDst = 'b1;        
           end
       'b111:  begin               // and
-        RegDst = 'b1; 
+        RegDst = 'b0; 
       end
     // ...
     endcase

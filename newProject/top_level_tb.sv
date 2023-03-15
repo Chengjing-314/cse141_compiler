@@ -17,8 +17,6 @@ module top_level_tb;
 	initial begin
 	reset = 1'b1;
 	#100 reset = 1'b0;
-	#10ns req = 1'b1;
-	#10ns req = 1'b0;
 	wait(done);
 	$display("done");
 	#10ns $stop;

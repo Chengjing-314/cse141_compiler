@@ -10,9 +10,9 @@ module top_level(
 	wire[3:0] instr;
   wire[7:0]   datA,datB,              regfile_dat,
 			         rslt,               // alu output
-              immediate,
                muxB;		  // from RegFile
-  wire [2:0]  muxA; 
+  wire [2:0]  muxA, muxD; 
+  wire [4:0] immediate;
 
   logic sc_in,   				  // shift/carry out from/to ALU
 			sc_o,
@@ -75,11 +75,12 @@ module top_level(
     pl2 (.index(immediate)  ,
          .value          );
   assign muxA = RegDst ? rd_addrB :3'b000;
+  assign muxD = absj ? 3'b000 : rd_addrB;
   reg_file #(.pw(3)) rf1(.dat_in(regfile_dat),	   // loads, most ops
               .clk         ,
               .wr_en   (RegWrite),
               .rd_addrA(rd_addrA),
-              .rd_addrB(rd_addrB),
+              .rd_addrB(muxD),
               .wr_addr (muxA),      // in place operation
               .datA_out(datA),
               .datB_out(datB)); // rb = rd
@@ -96,7 +97,7 @@ module top_level(
 		 .pari,
      .zero  );  // check for zero/zeroQ here
 
-  assign pcSrc = absj & zeroQ;
+  assign pcSrc = absj & zero;
   dat_mem dm1(.dat_in(datB)  ,  // from reg_file
              .clk           ,
 			 .wr_en  (MemWrite), // stores
@@ -113,6 +114,6 @@ module top_level(
       sc_in <= sc_o;
   end
 
-  assign done = prog_ctr == 128;
+  assign done = prog_ctr == 256;
  
 endmodule

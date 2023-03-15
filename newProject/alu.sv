@@ -21,7 +21,7 @@ always_comb begin
     case(alu_cmd)
       4'b1100: begin //bne
         rslt = |inA;
-		  zero = |inA;
+		    zero = |inA;
 		  end
       4'b1101: //set
         rslt = inB;
