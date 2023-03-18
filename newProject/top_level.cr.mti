@@ -61,26 +61,19 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	prog1_tb
 
-} {} {}} E:/CSE141L/cse141_compiler/newProject/alu_tb.sv {1 {vlog -work work -sv -stats=none E:/CSE141L/cse141_compiler/newProject/alu_tb.sv
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module alu_tb
-
-Top level modules:
-	alu_tb
-
-} {} {}} E:/CSE141L/cse141_compiler/newProject/PC_LUT.sv {1 {vlog -work work -sv -stats=none E:/CSE141L/cse141_compiler/newProject/PC_LUT.sv
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module PC_LUT
-
-Top level modules:
-	PC_LUT
-
 } {} {}} E:/CSE141L/cse141_compiler/newProject/prog2_tb.sv {1 {vlog -work work -sv -stats=none E:/CSE141L/cse141_compiler/newProject/prog2_tb.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module prog2_tb
 
 Top level modules:
 	prog2_tb
+
+} {} {}} E:/CSE141L/cse141_compiler/newProject/alu_tb.sv {1 {vlog -work work -sv -stats=none E:/CSE141L/cse141_compiler/newProject/alu_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module alu_tb
+
+Top level modules:
+	alu_tb
 
 } {} {}} E:/CSE141L/cse141_compiler/newProject/PC_LUT_2.sv {1 {vlog -work work -sv -stats=none E:/CSE141L/cse141_compiler/newProject/PC_LUT_2.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020

@@ -61,8 +61,7 @@ def hamming_decode(data1, data2):
             data2 = data2 ^ (1 << res)
         
         indicator = 0b01000000
-            
-
+        
     data_2_4_2 = (data2 & 0b11100000) >> 4 # 11100000 -> 00001110
     data_2_1 = (data2 & 0b1000) >> 3
     

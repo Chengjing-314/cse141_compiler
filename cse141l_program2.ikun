@@ -71,10 +71,10 @@ mov r6 r0   # r6 = cbit = temp_data2 & 1
 lsr r2 1    # temp_data2 >> 1
 set 1
 xor r6 r0   # if cbit == 1
-bne if2
+bne if6
 xor r5 r4   # res = res ^ cnt
 mov r5 r0
-if2:
+if6:
 set 1
 add r4 r0   # cnt++
 condition2:
@@ -92,10 +92,10 @@ mov r6 r0   # r6 = cbit = temp_data1 & 1
 lsr r1 1    # temp_data1 >> 1
 set 1
 xor r6 r0   # if cbit == 1
-bne if1
+bne if5
 xor r5 r4   # res = res ^ cnt
 mov r5 r0
-if1:
+if5:
 set 1
 add r4 r0   # cnt++
 condition:
@@ -122,15 +122,15 @@ bne if2
 set 0
 mov r1 r0   # indicator = 0b00000000
 set 1
-bne endif2
-if2:        # if res != 0
+bne endif2  # if res != 0
+if2:
 set 0b11000
 lsl r0 3
 mov r1 r0   # set 0b11000000
 endif2:
 set 1
-bne endif1  # jump to endif1
-if1:        # if p0_check != 0
+bne endif1  # jump to endif1 if p0_check != 0
+if1:
 set 0
 xor r5 r0
 bne if3
@@ -151,8 +151,16 @@ mov r2 r5   # r2 = res
 lsr r2 3
 set 0b1000
 xor r5 r0
+bne if7
+set 0
+mov r4 r0
+set 1
+bne endif7
+if7:
+set 1
 mov r4 r0   # r4 = r5 ^ 0b1000 check res == 8
-add r4 r1
+endif7:
+add r4 r2
 set 0b0111
 and r0 r5
 mov r5 r0   # res = res - 8
@@ -180,7 +188,6 @@ if4:
 xor r6 r2   # data2 = data2 ^ r2
 mov r6 r0
 endif1:
-
 set 0b1110
 lsl r0 2
 lsl r0 2
@@ -220,7 +227,7 @@ sw r3 r0
 condition5:
 set 0b110
 lw r3 r0
-set 0b1111
+set 0b1111   # run 15 times
 mov r4 r0
 xor r4 r3
 bne start5
