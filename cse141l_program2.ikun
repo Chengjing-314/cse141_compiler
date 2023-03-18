@@ -1,113 +1,226 @@
-set 0 		# r1 = data
-mov r1 r0	
-set 1       # prepare to set up p0
-and r0 r1   # p0 = data & 0b1
-mov r2 r0   # r2 = p0
-set 0       # r3 = counter = 0
-mov r3 r0   # r3 = counter
-set 0       # r4 = res = 0
-mov r4 r0   # r4 = res
-mov r0 r1   # bring data to prepare for temp
-lsr r0 1    # data >> 1
-mov r5 r0   # r5 = temp = data >> 1
-set 1       # while loop start
-bne condition1
-while_loop:
-set 1       # set up 0b1
-and r0 r5   # temp & 0b1
-mov r6 r0   # r6 = current_bit = temp & 0b1
-lsr r5 1    # temp >> 1
-xor r4 r6   # res ^ current_bit
-mov r4 r0   # r4 = res = res ^ current_bit
-set 1       # counter++
-add r3 r0	
-condition1:
-set 0b01111 # r0 = 15 (0b01111)
-xor r0 r3   # check counter == 15?
-bne while_loop
-xor r4 r2   # res ^ p0
-bne if_not_equal
-set 1   # counter = 1
-mov r3 r0   # r3 = counter = 1
-mov r0 r1   # r0 = data
-lsr r0 1    # data >> 1
-mov r5 r0   # r5 = temp = data >> 1
-set 1       # prepare for while
-bne condition2
-while_loop2:
-set 1       # set up 0b1
-and r0 r5   # r0 = temp & 0b1
-mov r6 r0   # r6 = current_bit = temp & 0b1
-bne inner_if
-set 1   # skip the if statement
-bne end_inner_if
-inner_if:
-xor r4 r3   # res ^ counter
-mov r4 r0   s# res = res ^ counter
-end_inner_if:
-set 1       # TO ASK: COUNTER++????
-add r3 r0   # counter++
-condition2:
-set 0b01111 # r0 = 15 (0b01111)
-xor r0 r3   # check counter == 15?
-bne while_loop
-mov r0 r4   # if r4 == 1 go to else
-bne second_else
-set 0       # counter = 0
-mov r3 r0   # r3 = counter = 0
-set 0b1     # shift_amount = 0b1
-mov r7 r0   # r7 = shift_amount = 0b1 (temporary)
-set 1       # go to while loop check
+set 0
+mov r3 r0
+set 0b110    # set 70 using LUT
+sw r3 r0
+set 1
+bne condition5
+start5:
+set 0b110
+lw r3 r0
+set 0b11111
+add r3 r3
+add r0 r3
+lw r1 r0    # load r1 = temp_data1 = data1
+set 0b11110
+add r0 r3
+lw r2 r0    # load r2 = temp_data2 = data2
+set 0
+mov r3 r0   # r3 := p0_check
+set 0
+mov r4 r0   # r4 := cnt
+set 1
 bne condition3
-error_check_while:
-lsl r7 1    # shift_amount << 1
-set 1       # set up counter = 1
-add r3 r0   # counter++
+start3:
+set 1
+and r1 r0   # temp_data1 & 1
+xor r3 r0
+mov r3 r0   # p0_check = p0_check ^ (temp_data1 & 1)
+lsr r1 1    # temp_data1 = temp_data1 >> 1
+set 1
+add r4 r0   # cnt++
 condition3:
-xor r3 r4   # counter ^ res check if they are equal
-bne error_check_while # branch to while
-xor r1 r7   # data ^ shift_amount
-mov r1 r0   # r1 = data = data ^ shift_amount
-set 0b01    # indicator = 0b01
-mov r7 r0   # r7 = indicator = 0b01
-set 1       # skip the else statement
-bne end_second_if
-second_else:
-set 0b00    # indicator = 0b00
-mov r7 r0   # r7 = indicator = 0b00
-end_second_if:
-set 1       # skip the if part 
-bne end_if:
-if_not_equal:
-set 0b10    # indicator = 0b10
-mov r7 r0   # r7 = indicator
-end_if:
-set 0b01000 # set 0b1111111000000000 LUT
-and r0 r1   # r0 = data & 0b1111111000000000
-lsr r0 2    # r0 >> 2
-lsr r0 2    # ro >> 2
-mov r2 r0   # r2 = d11_5
-set 0b01001 # set 0b0000000001110000 LUT
-and r0 r1   # r0 = data & 0b0000000001110000
-lsr r0 2    # r0 >> 2
-lsr r0 1    # r0 >> 1
-mov r3 r0   # r3 = d4_2
-set 0b01010 # set 0b0000000000001000 LUT
-and r0 r1   # r0 = data ^ 0b0000000000001000
-lsr r0 2    # r0 >> 2
-mov r4 r0   # r4 = d1
-lsl r7 2    # indicator << 12
-lsl r7 2
-lsl r7 2
-lsl r7 2
-lsl r7 2
-lsl r7 2
-set 0       # empty r5 for return
-mov r5 r0	
-add r5 r2   # r5 = d11_5
-add r5 r3   # r5 = d11_5 + d4_2
-set 1       # prepare to add 1
-add r5 r0   # r5 = d11_5 + d4_2 + 1
-add r5 r4   # r5 = d11_5 + d4_2 + 1 + d1
-add r5 r7   # r5 = d11_5 + d4_2 + 1 + d1 + indicator
-mov r0 r5   # get r0 to return
+set 0b1000  # loop 8 times
+xor r4 r0
+bne start3
+set 0
+mov r4 r0   # r4 := cnt = 0
+set 1
+bne condition4
+start4:
+set 1
+and r2 r0   # temp_data2 & 1
+xor r3 r0
+mov r3 r0   # p0_check = p0_check ^ (temp_data2 & 1)
+lsr r2 1    # temp_data2 = temp_data2 >> 1
+set 1
+add r4 r0   # cnt++
+condition4:
+set 0b1000
+xor r4 r0
+bne start4
+set 0b110
+lw r5 r0
+set 0b11111
+add r5 r5
+add r0 r5
+lw r1 r0    # load r1 = temp_data1 = data1
+set 0b11110
+add r0 r5
+lw r2 r0    # load r2 = temp_data2 = data2
+lsr r2 1    # temp_data2 >> 1
+set 1
+mov r4 r0   # cnt = 1
+set 0
+mov r5 r0   # res = 0
+set 1
+bne condition2
+start2:
+set 1
+and r0 r2   # r6 = cbit = temp_data2 & 1
+mov r6 r0   # r6 = cbit = temp_data2 & 1
+lsr r2 1    # temp_data2 >> 1
+set 1
+xor r6 r0   # if cbit == 1
+bne if2
+xor r5 r4   # res = res ^ cnt
+mov r5 r0
+if2:
+set 1
+add r4 r0   # cnt++
+condition2:
+set 0b1000  # set r0 to be 8
+xor r0 r4   # check if counter is 8
+bne start2
+set 0b1000
+mov r4 r0   # r4 = cnt = 8
+set 1
+bne condition
+start:
+set 1       # while start
+and r0 r1
+mov r6 r0   # r6 = cbit = temp_data1 & 1
+lsr r1 1    # temp_data1 >> 1
+set 1
+xor r6 r0   # if cbit == 1
+bne if1
+xor r5 r4   # res = res ^ cnt
+mov r5 r0
+if1:
+set 1
+add r4 r0   # cnt++
+condition:
+set 0b10000 # set r0 to be 16
+xor r0 r4   # check if counter is 16
+bne start
+set 0
+mov r1 r0   # r1 = indicator = 0
+set 0b110
+lw r4 r0
+set 0b11111
+add r4 r4
+add r0 r4
+lw r7 r0    # load r7 = data1
+set 0b11110
+add r0 r4
+lw r6 r0    # load r6 = data2
+set 0
+xor r3 r0
+bne if1     # if p0_check == 0
+set 0
+xor r5 r0   # if res == 0
+bne if2
+set 0
+mov r1 r0   # indicator = 0b00000000
+set 1
+bne endif2
+if2:        # if res != 0
+set 0b11000
+lsl r0 3
+mov r1 r0   # set 0b11000000
+endif2:
+set 1
+bne endif1  # jump to endif1
+if1:        # if p0_check != 0
+set 0
+xor r5 r0
+bne if3
+set 1
+xor r0 r6
+mov r6 r0   # data2 = data2 ^ 1
+set 0b01000
+lsl r0 3
+mov r1 r0   # indicator = 0b01000000
+set 1
+bne endif1
+if3:
+set 0b01000
+lsl r0 3
+mov r1 r0   # indicator = 0b01000000
+set 0b1000
+mov r2 r5   # r2 = res
+lsr r2 3
+set 0b1000
+xor r5 r0
+mov r4 r0   # r4 = r5 ^ 0b1000 check res == 8
+add r4 r1
+set 0b0111
+and r0 r5
+mov r5 r0   # res = res - 8
+set 1
+mov r2 r0   # r2 = 1
+set 0
+mov r3 r0   # r3 = counter
+set 1
+bne condition6
+start6:
+lsl r2 1
+set 1
+add r3 r0   # counter++
+condition6:
+xor r3 r5
+bne start6
+set 0b10
+xor r4 r0
+bne if4     # if res > 8
+xor r7 r2
+mov r7 r0   # data1 = data1 ^ r2
+set 1
+bne endif1
+if4:
+xor r6 r2   # data2 = data2 ^ r2
+mov r6 r0
+endif1:
+
+set 0b1110
+lsl r0 2
+lsl r0 2
+and r0 r6
+lsr r0 2
+lsr r0 2
+mov r2 r0   # r2 = data_2_4_2 = (data2 & 0b11100000) >> 4
+set 0b1000
+and r0 r6
+lsr r0 3
+mov r3 r0   # r3 = data_2_1 = (data2 & 0b1000) >> 3
+set 0b11110
+and r0 r7
+lsl r0 3
+mov r4 r0   # r4 = data_1_8_5 = (data1 & 0b00011110) << 3
+lsr r7 3
+lsr r7 2    # data1 = data1 >> 5
+add r2 r3
+add r2 r4
+mov r6 r2   # data2 = data_2_4_2 + data_2_1 + data_1_8_5
+add r7 r1   # data1 += indicator
+set 0b110
+lw r3 r0
+set 0
+add r3 r3
+add r0 r3
+sw r6 r0    # dm1.core[i*2] = data_2
+set 1
+add r0 r3
+sw r7 r0    # dm1.core[1+2*i] = data_1
+set 0b110   # set i
+lw r3 r0
+set 1
+add r3 r0
+set 0b110
+sw r3 r0
+condition5:
+set 0b110
+lw r3 r0
+set 0b1111
+mov r4 r0
+xor r4 r3
+bne start5

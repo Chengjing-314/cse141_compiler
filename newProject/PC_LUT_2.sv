@@ -15,6 +15,7 @@ module PC_LUT_2(
     17: value = 17;
     18: value = 18;
     24: value = 24;
+    30: value = 30;
     31: value = 31;
     25: value = 65024;
     26: value = 112;
@@ -34,7 +35,7 @@ module PC_LUT_2(
     21: value = 21;
     22: value = 22;
     23: value = 23;
-    30: value = 30;
+    
     default: value = 'b0; 
   endcase
 
