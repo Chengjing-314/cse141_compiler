@@ -243,8 +243,6 @@ def main(args):
     sf = open(source_file, 'r')
     df = open(destination_file, 'w+')
     
-    true_label = get_label(label_file)
-    
     # check if destination file have content
     if df.readlines():
         print('ABORT: Destination file is not empty')
@@ -253,6 +251,8 @@ def main(args):
     #! label dict is only for reference, not intended to use
     label_dict = sweep_labels(sf)
     print(label_dict)
+    
+    true_label = get_label(label_file)
     
     sf.seek(0) # reset file pointer
     assemble_program(sf, df, label_dict, true_label)
