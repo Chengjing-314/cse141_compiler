@@ -1,142 +1,97 @@
-set 0 # TODO: r7 = data[0] = data 
-set 0 # TODO: store pattern into str[2]
-set 0 # setup LUT for storage -> 0b10000 to 0b11000
-set 0 # str[0] = c_data = 0b10000
-set 0 # str[1] = counter = 0b10001
-set 0 # str[2] = pattern = 0b10010
-set 0 			# r1 = counter = 0
-mov r1 r0
-set 0           # r2 = byte_cnt = 0
-mov r2 r0
-set 0           # r3 = byte_occ = 0
-mov r3 r0
-set 1           # branch to condition
+set 0
+mov r1 r0   # r1 = outer
+set 0
+mov r2 r0   # r2 = byte_cnt
+set 0
+mov r3 r0   # r3 = occ_cnt
+set 0b1001  # set 32
+lw r4 r0    # r4 = txt[32]
+set 0b11111
+lsl r0 3    # r0 = 0b11111000
+and r4 r0
+lsr r0 3
+mov r4 r0   # r4 = pattern = (txt[32] & 0b11111000) >> 3
+set 1
 bne condition1
-outer_loop:
-set 0b10001 # load counter
-lw r1 r0   # r1 = counter
-set 0       
-mov r4 r0   # r4 = inner = 0
-set 0   
-mov r5 r0   # r5 = occ_flag = 0
-mov r0 r7   # r0 = data[0]
-add r0 r1   # data[0] -> data[counter]
-lw r6 r0   # r6 = c_data = data[counter]
-set 1       # branch to condition2
+start1:
+lw r5 r1    # cur = txt[outer]
+set 0
+mov r6 r0   # r6 = inner = 0
+set 0
+mov r7 r0   # r7 = occ_flag = 0
+set 1
 bne condition2
-inner_loop:
-set 0b10000 # load c_data
-lw r6 r0   # r6 = c_data = str[0]
-set 0b11111 # set 0b11111 for and
-xor r6 r0   # c_data ^ 0b11111 -> r0
-mov r1 r0   # r1 = current (temp)
-lsr r6 1    # c_data >> 1
-set 0b10000 # str[0]
-sw r6 r0   # str[0] = c_data
-set 0b10010 # prepare to load pattern
-lw r6 r0   # r6 = str[2] = pattern (temp)
-xor r6 r1   # check current == pattern
-bne endif   # if not equal we branch
-set 1       # r0 = 1
+start2:
+set 0b11111
+and r5 r0
+lsr r5 1
+xor r0 r4
+bne if1:
+set 1
+mov r7 r0   # occ_flag = 1
 add r2 r0   # byte_cnt++
-set 1       # occ_flag = 1
-mov r5 r0   
-endif:
-set 1       # inner++
-add r4 r0   
+if1:
+set 1
+add r6 r0   # inner++
 condition2:
-set 4       # check for inner < 4
-xor r4 r0   # while (inner != 4)
-bne inner_loop
-set 0b10001 # load counter
-lw r1 r0    # counter = str[1]
-set 1       # counter++
-add r1 r0
-set 0b10001 # r0 = str[1]
-sw r1 r0   # store the new counter str[1] = counter
-add r3 r5   # byteocc += occ_flag
+set 0b100
+xor r0 r6
+bne start2
+add r3 r7   # occ_cnt += occ_flag
+set 1
+add r1 r0   # outer++
 condition1:
-set 0b10001 # setup str[1]
-lw r1 r0   # r1 = counter = str[1]
-set 0b11010 # r0 = 32
-xor r1 r0   # while(counter != 32)
-bne outer_loop
-end_outer_loop:
-set 0       # r0 = 0
-mov r1 r0   # counter = 0
-set 0b10001 # clear counter in str[]
-sw r1 r0   # clear counter
-set 0b11011     # set 33(11011)
-add r0 r7   # r0 = data[33]
-sw r2 r0   # data[33] = byte_cnt
-set 0b11100     # set 34(11100)
-add r0 r7   # r0 = data[34]
-sw r3 r0   # data[34] = byte_occ
-set 0       # r0 = 0
-mov r2 r0   # r2 = bye_cnt = 0
-set 1       # prepare while loop
+set 0b1001  # set 32
+xor r0 r1
+bne start1
+set 0b1010  # set 33
+sw r2 r0    # txt[33] = byte_cnt
+set 0b1011  # set 34
+sw r3 r0    # txt[34] = occ_cnt
+set 0
+mov r1 r0
+set 1
 bne condition3
-third_loop:
-mov r0 r7   # prepare for data[counter]
-set 0       # clear r0
-add r0 r1   # data[0] -> &data[counter]
-lw r0 r0   # r0 = data[counter]
-mov r3 r0   # r3(temp) = data[counter]
-set 0b01111 # r0 = 0b11111
-and r0 r3   # f_lower = data[counter] & 0b01111
-mov r4 r0   # r4 = f_lower
-mov r3 r1   # r3 = counter (value)
-set 1       # prepare for counter+1
-add r3 r0   # r3 += 1 (counter+1)
-add r3 r7   # data[counter+1]
-lw r3 r3   # r3 = data[counter+1]
-set 0b1111  # r0 = 0b1111
-lsl r0 2    # r0 << 2 -> r0 = 0b111100
-lsl r0 2    # ro << 2 -> r0 = 0b11110000
-and r0 r3   # r0 = data[counter+1] & 0b11110000
-mov r5 r0   # r5 = s_upper
-lsl r4 2    # f_lower << 2 shift to correct position
-lsl r4 2    # f_lower << 2
-lsr r5 2    # s_upper >> 2
-lsr r5 2    # s_upper >> 2 shift to position
-set 0       # r0 = 0
-add r0 r4   # r0 = f_lower
-add r0 r5   # r0 = f_lower + s_upper
-mov r6 r0   # new_dt = f_lower + s_upper
-set 0       # r4 = inner (inner loop only)
-mov r4 r0   # r4 = r0 = inner
-set 1       # branch to condition first
+start3:
+lw r3 r1    # temp = txt[outer]
+set 0b1111
+and r3 r0
+lsl r0 2
+lsl r0 2
+mov r5 r0   # cur = upper = (txt[outer] & 0b00001111) << 4
+set 1
+add r0 r1   # r0 = outer + 1
+lw r3 r0    # temp = txt[outer+1]
+set 0b11110
+lsl r0 3
+and r3 r0
+lsr r0 2
+lsr r0 2    # lower = (txt[outer+1] & 0b11110000) >> 4
+add r5 r0   # cur = upper + lower
+set 0
+mov r6 r0   # r6 = inner = 0
+set 1
 bne condition4
-inner_loop2:
-set 0b11111 # r0 = 0b11111
-xor r0 r6   # r0 = 0b11111 ^ new_dt
-mov r5 r0   # R5 = current (inner only)
-lsr r6 1    # new_dt >> 1
-set 0b10010     # r0 = str[3] = pattern
-lw r3 r0    # r3(temp) = str[3] = pattern
-xor r6 r3   # check current == pattern
-bne endif2  # if not equal we branch
-set 1       # r0 = 1
-add r2 r0   # byte_cnt++   
-endif2:
-set 1       # inner++
-add r4 r0   
+start4:
+set 0b11111
+and r5 r0
+lsr r5 1
+xor r0 r4
+bne if2:
+set 1
+add r2 r0   # byte_cnt++
+if2:
+set 1
+add r6 r0   # inner++
 condition4:
-set 4       # check for inner < 4
-xor r4 r0   # while (inner != 4)
-bne inner_loop2
-set 1       # counter++
-add r1 r0
+set 0b100
+xor r0 r6
+bne start4
+set 1
+add r1 r0   # outer++
 condition3:
-set 0b11001 # r0 = 31
-xor r1 r0   # while(counter != 31)
-bne third_loop
-end_outer_loop2:
-set 0b11011 # r0 = 0b11011 (33)
-add r0 r7   # r0 = data[33]
-lw r0 r0   # r0 = data[33] (value)
-add r0 r2   # r0 = data[33] + byte_cnt
-mov r1 r0   # r1 = data[33] + byte_cnt
-set 0b11101 # r0 = 0b11101 (35)
-add r0 r7   # r0 = data[35]
-sw r1 r0   # data[35] = data[33] + byte_cnt
+set 0b11111 # set 31
+xor r0 r1
+bne start3
+set 0b1100  # set 35
+sw r2 r0

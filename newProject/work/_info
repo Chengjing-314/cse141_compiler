@@ -11,7 +11,7 @@ cModel Technology
 dE:/top_level
 valu
 Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-Z1 !s110 1679127236
+Z1 !s110 1679300161
 !i10b 1
 !s100 ]`5IDQ;14IXg9<^FjCV?D3
 Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
@@ -22,18 +22,18 @@ Z4 dE:/CSE141L/cse141_compiler/newProject
 w1678841505
 8E:/CSE141L/cse141_compiler/newProject/alu.sv
 FE:/CSE141L/cse141_compiler/newProject/alu.sv
-!i122 420
+!i122 611
 L0 3 61
 Z5 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z6 !s108 1679127236.000000
+!s108 1679300160.000000
 !s107 E:/CSE141L/cse141_compiler/newProject/alu.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/alu.sv|
 !i113 1
-Z7 o-work work -sv
-Z8 tCvgOpt 0
+Z6 o-work work -sv
+Z7 tCvgOpt 0
 valu_tb
 R0
 R1
@@ -47,18 +47,18 @@ R4
 w1678519118
 8E:/CSE141L/cse141_compiler/newProject/alu_tb.sv
 FE:/CSE141L/cse141_compiler/newProject/alu_tb.sv
-!i122 421
+!i122 612
 L0 1 84
 R5
 r1
 !s85 0
 31
-R6
+Z8 !s108 1679300161.000000
 !s107 E:/CSE141L/cse141_compiler/newProject/alu_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/alu_tb.sv|
 !i113 1
+R6
 R7
-R8
 vControl
 R0
 R1
@@ -72,22 +72,22 @@ R4
 w1678839873
 8E:/CSE141L/cse141_compiler/newProject/Control.sv
 FE:/CSE141L/cse141_compiler/newProject/Control.sv
-!i122 422
+!i122 613
 L0 2 67
 R5
 r1
 !s85 0
 31
-R6
+R8
 !s107 E:/CSE141L/cse141_compiler/newProject/Control.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/Control.sv|
 !i113 1
+R6
 R7
-R8
 n@control
 vcu_tb
 R0
-Z9 !s110 1679127237
+R1
 !i10b 1
 !s100 c0X@oo9<b4Y1aTTcQ7?Fb3
 R2
@@ -98,21 +98,21 @@ R4
 w1678477707
 8E:/CSE141L/cse141_compiler/newProject/cu_tb.sv
 FE:/CSE141L/cse141_compiler/newProject/cu_tb.sv
-!i122 423
+!i122 614
 L0 1 47
 R5
 r1
 !s85 0
 31
-R6
+R8
 !s107 E:/CSE141L/cse141_compiler/newProject/cu_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/cu_tb.sv|
 !i113 1
+R6
 R7
-R8
 vdat_mem
 R0
-R9
+R1
 !i10b 1
 !s100 6=@:I[0zVKdofFED05Fnf1
 R2
@@ -123,21 +123,21 @@ R4
 w1678684557
 8E:/CSE141L/cse141_compiler/newProject/dat_mem.sv
 FE:/CSE141L/cse141_compiler/newProject/dat_mem.sv
-!i122 424
+!i122 615
 L0 2 18
 R5
 r1
 !s85 0
 31
-Z10 !s108 1679127237.000000
+R8
 !s107 E:/CSE141L/cse141_compiler/newProject/dat_mem.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/dat_mem.sv|
 !i113 1
+R6
 R7
-R8
 vinstr_ROM
 R0
-R9
+R1
 !i10b 1
 !s100 41ZD;EQmFTDahUcizPkKf1
 R2
@@ -148,22 +148,22 @@ R4
 w1678684417
 8E:/CSE141L/cse141_compiler/newProject/instr_ROM.sv
 FE:/CSE141L/cse141_compiler/newProject/instr_ROM.sv
-!i122 425
+!i122 616
 L0 4 11
 R5
 r1
 !s85 0
 31
-R10
+R8
 !s107 E:/CSE141L/cse141_compiler/newProject/instr_ROM.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/instr_ROM.sv|
 !i113 1
+R6
 R7
-R8
 ninstr_@r@o@m
 vPC
 R0
-R9
+R1
 !i10b 1
 !s100 oNhX0F3>D:WT_Ub[iofF90
 R2
@@ -174,70 +174,70 @@ R4
 w1678684375
 8E:/CSE141L/cse141_compiler/newProject/PC.sv
 FE:/CSE141L/cse141_compiler/newProject/PC.sv
-!i122 426
+!i122 617
 L0 4 17
 R5
 r1
 !s85 0
 31
-R10
+R8
 !s107 E:/CSE141L/cse141_compiler/newProject/PC.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/PC.sv|
 !i113 1
+R6
 R7
-R8
 n@p@c
 vPC_LUT
 R0
-R9
+Z9 !s110 1679300162
 !i10b 1
-!s100 QO`zLJ8<;ORjJ;I>>Ddj93
+!s100 FgWfialY0WH1K7T9Ykm4?1
 R2
-IlhefH?5O<:]WMdcaf>;oD2
+I>bJUQ<8cW6<Lc3CU^5d@k2
 R3
 S1
 R4
-w1679125010
+w1679300096
 8E:/CSE141L/cse141_compiler/newProject/PC_LUT.sv
 FE:/CSE141L/cse141_compiler/newProject/PC_LUT.sv
-!i122 427
-L0 1 41
+!i122 618
+L0 1 40
 R5
 r1
 !s85 0
 31
-R10
+R8
 !s107 E:/CSE141L/cse141_compiler/newProject/PC_LUT.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/PC_LUT.sv|
 !i113 1
+R6
 R7
-R8
 n@p@c_@l@u@t
 vPC_LUT_2
 R0
 R9
 !i10b 1
-!s100 c@68:=dLE4MFm=^:Jo?j50
+!s100 Y=H>O8FCY6RLEj;iCCdRS0
 R2
-IMRjIN8GH[dXP=<g1aWH;J3
+IQK`8HS;;N2V_QHcn@;2Q?2
 R3
 S1
 R4
-w1679114754
+w1679202250
 8E:/CSE141L/cse141_compiler/newProject/PC_LUT_2.sv
 FE:/CSE141L/cse141_compiler/newProject/PC_LUT_2.sv
-!i122 428
+!i122 619
 L0 1 42
 R5
 r1
 !s85 0
 31
-R10
+Z10 !s108 1679300162.000000
 !s107 E:/CSE141L/cse141_compiler/newProject/PC_LUT_2.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/PC_LUT_2.sv|
 !i113 1
+R6
 R7
-R8
 n@p@c_@l@u@t_2
 vprog1_tb
 R0
@@ -252,7 +252,7 @@ R4
 w1678834138
 8E:/CSE141L/cse141_compiler/newProject/prog1_tb.sv
 FE:/CSE141L/cse141_compiler/newProject/prog1_tb.sv
-!i122 429
+!i122 620
 L0 10 65
 R5
 r1
@@ -262,8 +262,8 @@ R10
 !s107 E:/CSE141L/cse141_compiler/newProject/prog1_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/prog1_tb.sv|
 !i113 1
+R6
 R7
-R8
 vprog2_tb
 R0
 R9
@@ -277,7 +277,7 @@ R4
 w1679115999
 8E:/CSE141L/cse141_compiler/newProject/prog2_tb.sv
 FE:/CSE141L/cse141_compiler/newProject/prog2_tb.sv
-!i122 430
+!i122 621
 L0 10 109
 R5
 r1
@@ -287,11 +287,36 @@ R10
 !s107 E:/CSE141L/cse141_compiler/newProject/prog2_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/prog2_tb.sv|
 !i113 1
+R6
 R7
-R8
+vprog3_tb
+R0
+Z11 !s110 1679300163
+!i10b 1
+!s100 LBoa8^GCYm7MXHdNzA89=2
+R2
+IA2Jlm52de]UUHQ@=YT2881
+R3
+S1
+R4
+w1679208771
+8E:/CSE141L/cse141_compiler/newProject/prog3_tb.sv
+FE:/CSE141L/cse141_compiler/newProject/prog3_tb.sv
+!i122 625
+L0 3 69
+R5
+r1
+!s85 0
+31
+!s108 1679300163.000000
+!s107 E:/CSE141L/cse141_compiler/newProject/prog3_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/prog3_tb.sv|
+!i113 1
+R6
+R7
 vreg_file
 R0
-Z11 !s110 1679127238
+R9
 !i10b 1
 !s100 SONKJ]T9d>K_bWg_XY_7T3
 R2
@@ -302,21 +327,21 @@ R4
 w1678685231
 8E:/CSE141L/cse141_compiler/newProject/reg_file.sv
 FE:/CSE141L/cse141_compiler/newProject/reg_file.sv
-!i122 431
+!i122 622
 L0 3 22
 R5
 r1
 !s85 0
 31
-Z12 !s108 1679127238.000000
+R10
 !s107 E:/CSE141L/cse141_compiler/newProject/reg_file.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/reg_file.sv|
 !i113 1
+R6
 R7
-R8
 vtop_level
 R0
-R11
+R9
 !i10b 1
 !s100 N6WMlP6VZaIeVbgKBcP:41
 R2
@@ -327,18 +352,18 @@ R4
 w1678846819
 8E:/CSE141L/cse141_compiler/newProject/top_level.sv
 FE:/CSE141L/cse141_compiler/newProject/top_level.sv
-!i122 432
+!i122 623
 L0 2 118
 R5
 r1
 !s85 0
 31
-R12
+R10
 !s107 E:/CSE141L/cse141_compiler/newProject/top_level.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/top_level.sv|
 !i113 1
+R6
 R7
-R8
 vtop_level_tb
 R0
 R11
@@ -352,15 +377,15 @@ R4
 w1678834118
 8E:/CSE141L/cse141_compiler/newProject/top_level_tb.sv
 FE:/CSE141L/cse141_compiler/newProject/top_level_tb.sv
-!i122 433
+!i122 624
 L0 1 25
 R5
 r1
 !s85 0
 31
-R12
+R10
 !s107 E:/CSE141L/cse141_compiler/newProject/top_level_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|E:/CSE141L/cse141_compiler/newProject/top_level_tb.sv|
 !i113 1
+R6
 R7
-R8

@@ -82,6 +82,13 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	PC_LUT_2
 
+} {} {}} E:/CSE141L/cse141_compiler/newProject/prog3_tb.sv {1 {vlog -work work -sv -stats=none E:/CSE141L/cse141_compiler/newProject/prog3_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module prog3_tb
+
+Top level modules:
+	prog3_tb
+
 } {} {}} E:/CSE141L/cse141_compiler/newProject/alu.sv {1 {vlog -work work -sv -stats=none E:/CSE141L/cse141_compiler/newProject/alu.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module alu

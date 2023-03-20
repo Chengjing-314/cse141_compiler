@@ -1,0 +1,71 @@
+    look_up_table = {
+        16: 0, 
+        23: 1,
+        31: 2,
+        33: 3, 
+        39: 4,
+        50: 5,
+        69: 6,
+        76: 7,
+        78: 8,
+        83: 9,
+        128: 10,
+        148: 11,
+        22: 12,
+        29: 13,
+        36: 14,
+        43: 15,
+        62: 16,
+        71: 17,
+        73: 18,
+        80: 19,
+        89: 20,
+        91: 21,
+        115: 22,
+        118: 23,
+        120: 24,
+        131: 25,
+        144: 26,
+        146: 27,
+        156: 28,
+        159: 29,
+        168: 30,
+        170: 31,}
+
+  always_comb case(addr_lut)
+    0: target = 16;
+	1: target = 23; 
+	2: target = 31;  
+	3: target = 33;
+	4: target = 39;
+	5: target = 50;
+	6: target = 69;
+	7: target = 76;
+	8: target = 78;
+	9: target = 83;
+	10: target = 128;
+	11: target = 148;
+	12: target = 22;
+	13: target = 29;
+	14: target = 36;
+	15: target = 43;
+	16: target = 62;
+	17: target = 71;
+	18: target = 73;
+	19: target = 80;
+	20: target = 89;
+	21: target = 91;
+	22: target = 115;
+	23: target = 118;
+	24: target = 120;
+	25: target = 131;
+	26: target = 144;
+	27: target = 146;
+	28: target = 156;
+	29: target = 159;
+	30: target = 168;
+	31: target = 170;
+	default: target = 'b0;  // hold PC  
+  endcase
+
+

@@ -25,10 +25,10 @@ module PC_LUT_2(
     5: value = 72;
     6: value = 70;
     7: value = 71;
-    9: value = 9;
-    10: value = 10;
-	  11: value = 11;
-    12: value = 12;
+    9: value = 32;
+    10: value = 33;
+	  11: value = 34;
+    12: value = 35;
     13: value = 13;
     19: value = 19;
     20: value = 20;
