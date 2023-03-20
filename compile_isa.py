@@ -27,7 +27,7 @@ import argparse
 class ji_ni_tai_mei_exception(Exception):
     pass
 
-def label_look_up_table(line_number):
+def label_look_up_table(line_number, lut):
     
     # program 1 look_up_table 
         # 7: 0, 
@@ -65,6 +65,7 @@ def label_look_up_table(line_number):
         # 159: 29,
         # 168: 30,
         # 170: 31,
+<<<<<<< HEAD
     # program 3 lookup table
         # 16: 0, 
         # 23: 1,
@@ -99,17 +100,30 @@ def label_look_up_table(line_number):
         159: 29,
         168: 30,
         170: 31,}
+=======
+>>>>>>> 6f64f979d8355b448b1be9a097c0787f79559f58
     
-    # FIXME: This is a hack to get the program to compile
     
-    look_up_line = look_up_table.get(line_number, None)
+    look_up_line = lut.get(line_number, None)
     
-    # if look_up_line == None:
-    #     print(f"ERROR:Invalid line number {line_number} NO LOOK UP TABLE ENTRY FOUND\n")
-    #     return None
+    if look_up_line == None:
+        print(f"ERROR:Invalid line number {line_number} NO LOOK UP TABLE ENTRY FOUND, TERMINATE\n")
+        exit(1)
     
     return get_immediate(look_up_line, 5)
 
+
+
+def get_label(file):
+    lf = open(file, 'r')
+    lines = lf.readlines()
+    label_dict = {}
+    for line in lines:
+        src, dst = line.split(':')
+        label_dict[int(src)] = int(dst)
+        
+    return label_dict
+        
     
     
 
@@ -166,7 +180,7 @@ def get_immediate(imm, num_bits):
         return None
     return bin(imm)[2:].zfill(num_bits)
 
-def assemble_program(source_file, destination_file, label_dict):
+def assemble_program(source_file, destination_file, label_dict, true_label):
     lines = source_file.readlines()
     total_lines = len(lines)
     line_number = 1
@@ -196,7 +210,7 @@ def assemble_program(source_file, destination_file, label_dict):
                 if cur_line[0].lower() == 'bne':
                     op1 = '0'
                     label_line = get_line_number(cur_line[1], label_dict)
-                    op2 = label_look_up_table(label_line)
+                    op2 = label_look_up_table(label_line, true_label)
                 else: 
                     op1 = '1'
                     #print(cur_line)
@@ -257,10 +271,12 @@ def get_line_number(label, label_dict):
 def main(args):
     source_file = args.f
     destination_file = args.o
+    label_file = args.l
     if not os.path.exists(source_file):
         print('Error: Source file does not exist')
         return
     
+    # Read source file, 
     sf = open(source_file, 'r')
     df = open(destination_file, 'w+')
     
@@ -269,10 +285,14 @@ def main(args):
         print('ABORT: Destination file is not empty')
         return
     
+    #! label dict is only for reference, not intended to use
     label_dict = sweep_labels(sf)
     print(label_dict)
+    
+    true_label = get_label(label_file)
+    
     sf.seek(0) # reset file pointer
-    assemble_program(sf, df, label_dict)
+    assemble_program(sf, df, label_dict, true_label)
     
     df.close()
     sf.close()
@@ -281,6 +301,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog = 'ISA_compile',description='A simple compiler for 141 ISA')
     parser.add_argument('-f', help='input file, absolute path', required=True)
+    parser.add_argument('-l', help='label file, absolute path', required=True)
     parser.add_argument('-o', help='output file name', default='./compiled_isa.txt')
     args = parser.parse_args()
     
